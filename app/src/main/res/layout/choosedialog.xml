@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="#ddffffff">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="请选择文件"
+        android:id="@+id/title"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:textColor="#bfffffff"
+        android:paddingTop="35px"
+        android:paddingBottom="35px"
+        android:background="#3f51b5"
+        android:gravity="center"
+        android:textStyle="bold" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/musicselect"
+                android:layout_marginLeft="160px"
+                android:layout_marginRight="90px">
+
+                <ImageView
+                    android:layout_width="242px"
+                    android:layout_height="242px"
+                    android:layout_row="0"
+                    android:src="@drawable/music"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="音频"
+                    android:textSize="14sp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000000"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/videoselect"
+                android:layout_marginRight="160px"
+                android:layout_marginLeft="90px">
+
+                <ImageView
+                    android:layout_width="242px"
+                    android:layout_height="242px"
+                    android:layout_row="0"
+                    android:layout_weight="1"
+                    android:src="@drawable/video"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="视频"
+                    android:textSize="14sp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000000"
+                    android:gravity="center" />
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/imageselect"
+                android:layout_marginLeft="160px"
+                android:layout_marginRight="90px">
+
+                <ImageView
+                    android:layout_width="242px"
+                    android:layout_height="242px"
+                    android:layout_row="0"
+                    android:layout_weight="1"
+                    android:src="@drawable/image"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="图片"
+                    android:textSize="14sp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000000"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/docselect"
+                android:layout_marginLeft="90px"
+                android:layout_marginRight="160px">
+
+                <ImageView
+                    android:layout_width="242px"
+                    android:layout_height="242px"
+                    android:layout_row="0"
+                    android:layout_weight="1"
+                    android:src="@drawable/doc"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="文档"
+                    android:textSize="14sp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000000"
+                    android:gravity="center" />
+            </LinearLayout>
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

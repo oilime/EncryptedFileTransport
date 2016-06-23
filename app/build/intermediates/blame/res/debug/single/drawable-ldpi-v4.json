@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/text_item_bottom_bg.xml",
+        "source": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/res/drawable-ldpi/text_item_bottom_bg.xml"
+    },
+    {
+        "merged": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/text_item_top_bg.xml",
+        "source": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/res/drawable-ldpi/text_item_top_bg.xml"
+    },
+    {
+        "merged": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/text_item_bg.xml",
+        "source": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/res/drawable-ldpi/text_item_bg.xml"
+    },
+    {
+        "merged": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/btn_pressed_bg.xml",
+        "source": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/res/drawable-ldpi/btn_pressed_bg.xml"
+    },
+    {
+        "merged": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/btn_nromal_bg.xml",
+        "source": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/res/drawable-ldpi/btn_nromal_bg.xml"
+    }
+]
