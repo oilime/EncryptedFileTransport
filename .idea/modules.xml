@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/EncryptedFileTransport.iml" filepath="$PROJECT_DIR$/EncryptedFileTransport.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/加密文件传输(expand).iml" filepath="$PROJECT_DIR$/加密文件传输(expand).iml" />
     </modules>
   </component>
 </project>

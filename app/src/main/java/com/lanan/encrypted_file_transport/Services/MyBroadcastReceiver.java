@@ -1,4 +1,4 @@
-package com.lanan.encrypted_file_transport.service;
+package com.lanan.encrypted_file_transport.Services;
 
 /**
  * Created by lanan on 16-5-12.
@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.lanan.encrypted_file_transport.Main.MainActivity;
-import com.lanan.encrypted_file_transport.utils.Appalive;
+import com.lanan.encrypted_file_transport.Utils.Appalive;
 
 
 public class MyBroadcastReceiver extends BroadcastReceiver {

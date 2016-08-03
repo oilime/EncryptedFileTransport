@@ -1,19 +1,13 @@
-package com.lanan.encrypted_file_transport.utils;
-
-import android.util.Log;
+package com.lanan.encrypted_file_transport.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherOutputStream;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -38,23 +32,15 @@ public class AES_crypt {
         }
         return rByte;
     }
-
-
     
     public static Cipher cipherSet(int cipherMode){
     	try{
     	   	SecretKeySpec key = new SecretKeySpec(getKey(keyBytes), "AES");
         	cipher = Cipher.getInstance(algorithmStr);
         	cipher.init(cipherMode, key, new IvParameterSpec(paramIv));
-    	}catch (NoSuchAlgorithmException e) {
-    		Log.e("H",e.toString());
-        } catch (NoSuchPaddingException e) {
-        	Log.e("H",e.toString());            
-        } catch (InvalidKeyException e) {
-        	Log.e("H",e.toString());
-        } catch (InvalidAlgorithmParameterException e) {
-			Log.e("H",e.toString());
-		}      
+    	}catch (Exception e) {
+            e.printStackTrace();
+        }
     	return cipher;
     }
 

@@ -1,4 +1,4 @@
-package com.lanan.encrypted_file_transport.filetransport;
+package com.lanan.encrypted_file_transport.FileTransport;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import com.lanan.encrypted_file_transport.R;
 
 public class ChatMsgViewAdapter extends BaseAdapter {
 
-	public static interface IMsgViewType {
+	public interface IMsgViewType {
 		int IMVT_COM_MSG = 0;// 收到对方的消息
 		int IMVT_TO_MSG = 1;// 自己发送出去的消息
 	}

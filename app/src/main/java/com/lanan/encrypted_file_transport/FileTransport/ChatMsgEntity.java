@@ -1,10 +1,10 @@
-package com.lanan.encrypted_file_transport.filetransport;
+package com.lanan.encrypted_file_transport.FileTransport;
 
 public class ChatMsgEntity {
-	private String name;//消息来自
-	private String date;//消息日期
-	private String message;//消息内容
-	private boolean isComMeg = true;// 是否为收到的消息
+	private String name;
+	private String date;
+	private String message;
+	private boolean isComMeg = true;
 
 	public String getName() {
 		return name;
@@ -36,16 +36,5 @@ public class ChatMsgEntity {
 
 	public void setMsgType(boolean isComMsg) {
 		isComMeg = isComMsg;
-	}
-
-	public ChatMsgEntity() {
-	}
-
-	public ChatMsgEntity(String name, String date, String text, boolean isComMsg) {
-		super();
-		this.name = name;
-		this.date = date;
-		this.message = text;
-		this.isComMeg = isComMsg;
 	}
 }

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/debug/shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/home/emilio/AS_project/EncryptedFileTransport/app/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/home/emilio/AS_project/EncryptedFileTransport/app/src/debug/shaders"/></dataSet></merger>

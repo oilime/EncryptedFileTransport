@@ -16,17 +16,16 @@ import java.util.Map;
 /**
  * Created by lanan on 16-5-18.
  */
-public class ExpandAdapter extends BaseExpandableListAdapter {
+public class MainAdapter extends BaseExpandableListAdapter {
 
     private List<List<Map<String, Object>>> mlist;
     private LayoutInflater mInflater;
 
-    private String[] group_title_arry = new String[] {"一院","二院","三院","四院","五院","六院","七院","八院"};
+    private String[] group_title_array = new String[] {"一院","二院","三院","四院"};
 
-    public ExpandAdapter(Context context, List<List<Map<String, Object>>> mylist){
+    public MainAdapter(Context context, List<List<Map<String, Object>>> mylist){
         this.mlist = mylist;
         this.mInflater = LayoutInflater.from(context);
-
     }
 
     @Override
@@ -38,7 +37,6 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
     public Object getGroup(int groupPosition) {
         return mlist.get(groupPosition);
     }
-
 
     @Override
     public long getGroupId(int groupPosition) {
@@ -70,39 +68,29 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
 
         convertView = mInflater.inflate(R.layout.adapter, null);
 
-        TextView groupname = (TextView) convertView.findViewById(R.id.tarname);
-        ImageView groupicon = (ImageView) convertView.findViewById(R.id.groupicon);
+        TextView groupName = (TextView) convertView.findViewById(R.id.tarname);
+        ImageView groupIcon = (ImageView) convertView.findViewById(R.id.groupicon);
         if (isExpanded){
-            groupicon.setImageResource(R.drawable.ic_arrow_down_12dp);
+            groupIcon.setImageResource(R.drawable.ic_arrow_down_12dp);
         } else {
-            groupicon.setImageResource(R.drawable.ic_arrow_right_12dp);
+            groupIcon.setImageResource(R.drawable.ic_arrow_right_12dp);
         }
-        groupname.setText(group_title_arry[groupPosition]);
+        groupName.setText(group_title_array[groupPosition]);
 
         return convertView;
     }
 
-    /**
-     * 对一级标签下的二级标签进行设置
-     */
     @Override
     public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         convertView = mInflater.inflate(R.layout.childadapter, null);
-
-        TextView childname = (TextView) convertView.findViewById(R.id.childtext);
-
+        TextView childName = (TextView) convertView.findViewById(R.id.childtext);
         String name = (String) mlist.get(groupPosition).get(childPosition).get("name");
-
-        childname.setText(name);
-
+        childName.setText(name);
         return convertView;
     }
 
-    /**
-     * 当选择子节点的时候，调用该方法
-     */
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;

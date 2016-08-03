@@ -1,146 +1,146 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:1:1-53:12
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:1:1-53:12
 	package
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:2:5-49
-		INJECTED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml
-		INJECTED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:2:5-49
+		INJECTED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml
+		INJECTED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml
 	android:versionName
-		INJECTED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml
-		INJECTED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml
+		INJECTED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml
+		INJECTED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:1:11-69
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:1:11-69
 	android:versionCode
-		INJECTED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml
-		INJECTED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml
+		INJECTED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml
+		INJECTED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml
 uses-permission#android.permission.INTERNET
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:4:5-66
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:4:5-66
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:4:22-64
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:4:22-64
 uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:5:5-83
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:5:5-83
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:5:22-81
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:5:22-81
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:6:5-80
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:6:5-80
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:6:22-78
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:6:22-78
 uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:7:5-75
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:7:5-75
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:7:22-73
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:7:22-73
 uses-permission#android.permission.CHANGE_WIFI_STATE
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:8:5-75
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:8:5-75
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:8:22-73
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:8:22-73
 uses-permission#android.permission.VIBRATE
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:9:5-65
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:9:5-65
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:9:22-63
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:9:22-63
 uses-sdk
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:11:5-13:41
-MERGED from [com.android.support:appcompat-v7:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:5:5-44
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:design:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:recyclerview-v7:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:appcompat-v7:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:5:5-44
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:11:5-13:41
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
 	tools:overrideLibrary
-		ADDED from [com.android.support:appcompat-v7:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:23:9-75
+		ADDED from [com.android.support:appcompat-v7:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:23:9-75
 	android:targetSdkVersion
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:13:9-38
-		INJECTED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml
-		INJECTED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:13:9-38
+		INJECTED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml
+		INJECTED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:12:9-35
-		INJECTED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml
-		INJECTED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:12:9-35
+		INJECTED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml
+		INJECTED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml
 application
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:15:5-52:19
-MERGED from [com.android.support:appcompat-v7:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:design:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:appcompat-v7:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:15:5-52:19
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
 	android:label
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:18:9-41
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:18:9-41
 	android:icon
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:16:9-43
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:16:9-43
 	android:theme
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:17:9-59
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:17:9-59
 activity#com.lanan.encrypted_file_transport.Main.MainActivity
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:20:9-28:20
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:20:9-28:20
 	android:launchMode
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:22:13-48
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:22:13-48
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:21:13-80
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:21:13-80
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:23:13-27:29
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:23:13-27:29
 action#android.intent.action.MAIN
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:24:17-69
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:24:17-69
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:24:25-66
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:24:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:26:17-77
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:26:17-77
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:26:27-74
-activity#com.lanan.encrypted_file_transport.filetransport.ChatActivity
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:30:9-33:20
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:26:27-74
+activity#com.lanan.encrypted_file_transport.FileTransport.ChatActivity
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:30:9-33:20
 	android:launchMode
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:32:13-48
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:32:13-48
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:31:13-89
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:31:13-89
 activity#com.lanan.encrypted_file_transport.FileActions.FileManager
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:35:9-38:20
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:35:9-38:20
 	android:launchMode
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:37:13-48
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:37:13-48
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:36:13-86
-service#com.lanan.encrypted_file_transport.service.NotificationService
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:40:9-44:19
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:36:13-86
+service#com.lanan.encrypted_file_transport.Services.NotificationService
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:40:9-44:19
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:40:18-95
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:40:18-96
 intent-filter#NotificationService
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:41:13-43:29
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:41:13-43:29
 action#NotificationService
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:42:17-62
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:42:17-62
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:42:25-59
-receiver#com.lanan.encrypted_file_transport.service.MyBroadcastReceiver
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:46:9-51:20
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:42:25-59
+receiver#com.lanan.encrypted_file_transport.Services.MyBroadcastReceiver
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:46:9-51:20
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:46:19-96
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:46:19-97
 intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.category.HOME
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:47:13-50:29
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:47:13-50:29
 action#android.intent.action.BOOT_COMPLETED
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:48:17-78
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:48:17-78
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:48:25-76
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:48:25-76
 category#android.intent.category.HOME
-ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:49:17-73
+ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:49:17-73
 	android:name
-		ADDED from /home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/src/main/AndroidManifest.xml:49:27-70
+		ADDED from /home/emilio/AS_project/EncryptedFileTransport/app/src/main/AndroidManifest.xml:49:27-70

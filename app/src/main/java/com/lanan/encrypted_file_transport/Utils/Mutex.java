@@ -1,8 +1,4 @@
-package com.lanan.encrypted_file_transport.utils;
-
-/**
- * Created by lanan on 16-5-10.
- */
+package com.lanan.encrypted_file_transport.Utils;
 
 public class Mutex {
     private boolean syncLock;
@@ -12,7 +8,7 @@ public class Mutex {
     }
 
     public synchronized void lock() {
-        while(syncLock == true) {
+        while(syncLock) {
             try {
                 wait();
             }

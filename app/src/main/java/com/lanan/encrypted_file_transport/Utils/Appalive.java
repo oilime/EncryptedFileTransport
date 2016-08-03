@@ -1,4 +1,4 @@
-package com.lanan.encrypted_file_transport.utils;
+package com.lanan.encrypted_file_transport.Utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -6,9 +6,6 @@ import android.util.Log;
 
 import java.util.List;
 
-/**
- * Created by lanan on 16-5-12.
- */
 public class Appalive {
     public static boolean isAppAlive(Context context, String packageName){
         ActivityManager activityManager =

@@ -6,10 +6,7 @@ import android.graphics.BitmapFactory;
 import java.io.File;
 import java.io.FileInputStream;
 
-/**
- * Created by lanan on 16-5-23.
- */
-public class thumbnail {
+public class Thumbnail {
 
     public static Bitmap decodeFile(File f){
         try {
@@ -20,9 +17,7 @@ public class thumbnail {
             bfOptions.inSampleSize = 1;
 
             FileInputStream fs = new FileInputStream(f);
-
-            if(fs != null)
-                BitmapFactory.decodeFileDescriptor(fs.getFD(), null, bfOptions);
+            BitmapFactory.decodeFileDescriptor(fs.getFD(), null, bfOptions);
 
             final int REQUIRED_SIZE = 320;
             int scale = 1;

@@ -2,7 +2,6 @@ package com.lanan.encrypted_file_transport.FileActions;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +15,16 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by lanan on 16-4-21.
- */
-public class newAdapter extends BaseAdapter {
+public class FileManagerAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<Map<String, Object>> mlist;
     private Boolean image;
-    private Boolean select;
     private int which;
 
     private int[] resId = new int[]{R.drawable.music,R.drawable.video,
                                     R.drawable.image, R.drawable.doc};
 
-    public newAdapter(Context context, List<Map<String, Object>> datalist) {
+    public FileManagerAdapter(Context context, List<Map<String, Object>> datalist) {
         mInflater = LayoutInflater.from(context);
         this.mlist = datalist;
         this.image = FileManager.image;
@@ -86,30 +81,22 @@ public class newAdapter extends BaseAdapter {
             holder.check.setVisibility(View.VISIBLE);
         } else {
             if (!mlist.get(position).containsKey("thumbnail")){
-                Bitmap bitmap = thumbnail.decodeFile(f);
+                Bitmap bitmap = Thumbnail.decodeFile(f);
                 mlist.get(position).put("thumbnail", bitmap);
                 holder.thunmbnail.setImageBitmap(bitmap);
-                Log.d("Emilio", "create thumbnail");
             } else {
                 holder.thunmbnail.setImageBitmap((Bitmap) mlist.get(position).get("thumbnail"));
-                Log.d("Emilio", "get thumbnail");
             }
         }
 
         holder.check.setImageResource(R.drawable.selected);
-        select = (Boolean) mlist.get(position).get("flag");
-        if (select){
+        if ((Boolean) mlist.get(position).get("flag")){
             holder.check.setVisibility(View.VISIBLE);
         }else {
             holder.check.setVisibility(View.GONE);
         }
 
         return convertView;
-    }
-
-    public void refresh(List<Map<String, Object>> list) {
-        this.mlist = list;
-        notifyDataSetChanged();
     }
 
     private class ViewHolder {

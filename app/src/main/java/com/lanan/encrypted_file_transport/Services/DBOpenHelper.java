@@ -1,4 +1,4 @@
-package com.lanan.encrypted_file_transport.service;
+package com.lanan.encrypted_file_transport.Services;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -1,4 +1,4 @@
-package com.lanan.encrypted_file_transport.filetransport;
+package com.lanan.encrypted_file_transport.FileTransport;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,21 +37,21 @@ import android.widget.Toast;
 
 import com.lanan.encrypted_file_transport.FileActions.FileManager;
 import com.lanan.encrypted_file_transport.R;
-import com.lanan.encrypted_file_transport.service.UploadLogService;
-import com.lanan.encrypted_file_transport.utils.AES_crypt;
+import com.lanan.encrypted_file_transport.Services.UploadLogService;
+import com.lanan.encrypted_file_transport.Utils.AES_crypt;
 import com.lanan.encrypted_file_transport.Main.MainActivity;
 
 public class ChatActivity extends AppCompatActivity{
 
-	private ImageView mBtnSend;// 发送btn
-	private ImageView mBtnBack;// 返回btn
+	private ImageView mBtnSend;
+	private ImageView mBtnBack;
 	private ListView mListView;
-	private ChatMsgViewAdapter mAdapter;// 消息视图的Adapter
+	private ChatMsgViewAdapter mAdapter;
 	private TextView tarName;
 	private static ProgressDialog pDialog;
 
 	private UploadLogService logService;
-	public List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();// 消息对象数组
+	public List<ChatMsgEntity> mDataArrays = new ArrayList<>();
 	private static Vibrator vibrator;
 	private static IntentFilter filter;
 
@@ -71,7 +71,6 @@ public class ChatActivity extends AppCompatActivity{
     public static final String SENDMSG = "com.lanan.sendmsg";
 
 	private static final String mainPath = "/sdcard/alan/system/security/local/tmp/chs";
-//    private static final String mainPath = "/sdcard";
 	private static final String musicDir = mainPath + "/演示音乐/";
 	private static final String videoDir = mainPath + "/演示视频/";
 	private static final String imageDir = mainPath + "/演示图片/";
@@ -84,7 +83,7 @@ public class ChatActivity extends AppCompatActivity{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.mymain);
 
-		regist();
+		register();
 		initData();
 		initView();
 	}
@@ -101,7 +100,7 @@ public class ChatActivity extends AppCompatActivity{
         local.unregisterReceiver(mReceiver);
 	}
 
-	private void regist(){
+	private void register(){
 		logService = new UploadLogService(this);
 
 		vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
@@ -121,11 +120,11 @@ public class ChatActivity extends AppCompatActivity{
 				if(intent.getAction().equals(DECRYPTFILE)){
 					String filename = intent.getStringExtra("filename");
 					final File file = new File(filename);
-					File tempdir = new File(mainPath + "/Filetransport/temp/");
-					if (!tempdir.exists() || !tempdir.isDirectory()){
-						tempdir.mkdirs();
+					File tempDir = new File(mainPath + "/Filetransport/temp/");
+					if (!tempDir.exists() || !tempDir.isDirectory()){
+						tempDir.mkdirs();
 					}
-					final File tmpfile = new File(tempdir, file.getName());
+					final File tmpfile = new File(tempDir, file.getName());
 					if(file.exists()){
 						pDialog.setMessage("解密中...");
 						pDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
@@ -181,17 +180,17 @@ public class ChatActivity extends AppCompatActivity{
                         Log.d("Emilio", "接收到CHAT_RECVMSG广播");
 
 						Bundle bundle = intent.getExtras();
-						String recvdate = bundle.getString("recvdate");
-						String recvfilename = bundle.getString("recvfilename");
-						String recvname = bundle.getString("recvname");
+						String recvDate = bundle.getString("recvdate");
+						String recvFilename = bundle.getString("recvfilename");
+						String recvName = bundle.getString("recvname");
 
-                        ChatMsgEntity recventity = new ChatMsgEntity();
-                        recventity.setName(recvname);
-                        recventity.setDate(recvdate);
-                        recventity.setMessage(recvfilename);
-                        recventity.setMsgType(true);
+                        ChatMsgEntity recvEntity = new ChatMsgEntity();
+                        recvEntity.setName(recvName);
+                        recvEntity.setDate(recvDate);
+                        recvEntity.setMessage(recvFilename);
+                        recvEntity.setMsgType(true);
 
-                        mDataArrays.add(recventity);
+                        mDataArrays.add(recvEntity);
                         mAdapter.notifyDataSetChanged();
                         mListView.setSelection(mListView.getCount() - 1);
                     }catch (Exception e){
@@ -337,19 +336,19 @@ public class ChatActivity extends AppCompatActivity{
 		pDialog.setCanceledOnTouchOutside(false);
 
 
-		mAdapter = new ChatMsgViewAdapter(this, mDataArrays);
-		mListView.setAdapter(mAdapter);
-		mListView.setSelection(mAdapter.getCount() - 1);
-
-		Window window = this.getWindow();
-		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-		window.setStatusBarColor(Color.parseColor("#2e40a4"));
-
-		ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
-		View mChildView = mContentView.getChildAt(0);
-		if (mChildView != null) {
-			ViewCompat.setFitsSystemWindows(mChildView, true);
-		}
+//		mAdapter = new ChatMsgViewAdapter(this, mDataArrays);
+//		mListView.setAdapter(mAdapter);
+//		mListView.setSelection(mAdapter.getCount() - 1);
+//
+//		Window window = this.getWindow();
+//		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//		window.setStatusBarColor(Color.parseColor("#2e40a4"));
+//
+//		ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
+//		View mChildView = mContentView.getChildAt(0);
+//		if (mChildView != null) {
+//			ViewCompat.setFitsSystemWindows(mChildView, true);
+//		}
 	}
 
 	public void initData() {
@@ -403,13 +402,12 @@ public class ChatActivity extends AppCompatActivity{
 		}
 	}
 
-	/* 获取wifi的ip地址 */
 	public String getLocalIpAddress() {
-		WifiManager wifimanage=(WifiManager)this.getSystemService(Context.WIFI_SERVICE);
-		if(!wifimanage.isWifiEnabled()){
-			wifimanage.setWifiEnabled(true);
+		WifiManager wifiManager=(WifiManager)this.getSystemService(Context.WIFI_SERVICE);
+		if(!wifiManager.isWifiEnabled()){
+			wifiManager.setWifiEnabled(true);
 		}
-		WifiInfo wifiinfo= wifimanage.getConnectionInfo();
+		WifiInfo wifiinfo= wifiManager.getConnectionInfo();
 		int i =wifiinfo.getIpAddress();
 		String ip = intToIp(i);
 		Log.d("Emilio", "当前设备ip:" + ip);
@@ -420,7 +418,6 @@ public class ChatActivity extends AppCompatActivity{
 		return (i & 0xFF)+ "." + ((i >> 8 ) & 0xFF) + "." + ((i >> 16 ) & 0xFF) +"."+((i >> 24 ) & 0xFF);
 	}
 
-	/* 获取文件类型 */
 	private static String getMIMEType(File f) {
 		String type = null;
 		String fName = f.getName();

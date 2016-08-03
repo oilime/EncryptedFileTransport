@@ -21,10 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lanan.encrypted_file_transport.R;
-import com.lanan.encrypted_file_transport.filetransport.ChatActivity;
-import com.lanan.encrypted_file_transport.service.UploadLogService;
-import com.lanan.encrypted_file_transport.utils.AES_crypt;
-import com.lanan.encrypted_file_transport.utils.StreamTool;
+import com.lanan.encrypted_file_transport.FileTransport.ChatActivity;
+import com.lanan.encrypted_file_transport.Services.UploadLogService;
+import com.lanan.encrypted_file_transport.Utils.AES_crypt;
+import com.lanan.encrypted_file_transport.Utils.StreamTool;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,18 +43,10 @@ import java.util.Map;
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 
-/**
- * Created by lanan on 16-4-21.
- */
-
 public class FileManager extends Activity {
-    private TextView mPath;
+
     private ListView listView;
     private GridView gridView;
-    private ImageView backButton;
-    private Button sendButton;
-    private LinearLayout cancel;
-    private LinearLayout selectall;
 
     private String rootPath = null;
     private String pathName = null;
@@ -62,12 +54,11 @@ public class FileManager extends Activity {
     private static String serverip = null;
 
     public static Boolean image = false;
-    private static newAdapter adapter = null;
+    private static FileManagerAdapter adapter = null;
 
     public static int num;
     private static Boolean decode = false;
     private static List<Map<String, Object>> mdatalist = null;
-    private String[] namelist = new String[]{"音频", "视频", "图片", "文档"};
 
     private SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -93,15 +84,20 @@ public class FileManager extends Activity {
 
         logService = new UploadLogService(this);
 
-        if (pathName.equals("音频"))
-            num = 0;
-        else if (pathName.equals("视频"))
-            num = 1;
-        else if (pathName.equals("图片"))
-            num = 2;
-        else if (pathName.equals("文档"))
-            num = 3;
-
+        switch (pathName){
+            case "音频":
+                num = 0;
+                break;
+            case "视频":
+                num = 1;
+                break;
+            case "图片":
+                num = 2;
+                break;
+            case "文档":
+                num = 3;
+                break;
+        }
 
         mdatalist.clear();
         mdatalist = getFileDir(ChatActivity.dir[num]);
@@ -110,6 +106,12 @@ public class FileManager extends Activity {
     }
 
     private void initview(){
+        TextView mPath;
+        ImageView backButton;
+        Button sendButton;
+        LinearLayout cancel;
+        LinearLayout selectall;
+
         if (image){
             setContentView(R.layout.showfile_img);
             gridView = (GridView) findViewById(R.id.mygrid);
@@ -176,7 +178,6 @@ public class FileManager extends Activity {
                 Intent gointent = new Intent();
                 gointent.setClass(FileManager.this, ChatActivity.class);
                 startActivity(gointent);
-                Log.d("Emilio","jump!");
                 FileManager.this.finish();
             }
         });
@@ -185,7 +186,6 @@ public class FileManager extends Activity {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.d("Emilio", "pressed");
                     boolean select = (boolean) mdatalist.get(position).get("flag");
                     mdatalist.get(position).put("flag", !select);
                     adapter.notifyDataSetChanged();
@@ -195,7 +195,6 @@ public class FileManager extends Activity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.d("Emilio", "pressed");
                     boolean select = (boolean) mdatalist.get(position).get("flag");
                     mdatalist.get(position).put("flag", !select);
                     adapter.notifyDataSetChanged();
@@ -207,7 +206,7 @@ public class FileManager extends Activity {
 
         mdatalist = getFileDir(rootPath);
 
-        adapter = new newAdapter(this, mdatalist);
+        adapter = new FileManagerAdapter(this, mdatalist);
 
         if (image){
             gridView.setAdapter(adapter);
@@ -215,15 +214,15 @@ public class FileManager extends Activity {
             listView.setAdapter(adapter);
         }
 
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.parseColor("#2e40a4"));
-
-        ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
-        View mChildView = mContentView.getChildAt(0);
-        if (mChildView != null) {
-            ViewCompat.setFitsSystemWindows(mChildView, true);
-        }
+//        Window window = this.getWindow();
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.setStatusBarColor(Color.parseColor("#2e40a4"));
+//
+//        ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
+//        View mChildView = mContentView.getChildAt(0);
+//        if (mChildView != null) {
+//            ViewCompat.setFitsSystemWindows(mChildView, true);
+//        }
     }
 
     /* 文件发送 */
@@ -232,14 +231,14 @@ public class FileManager extends Activity {
             @Override
             public void run() {
                 try {
-                    String souceid = logService.getBindId(uploadFile);
+                    String sourceId = logService.getBindId(uploadFile);
                     String head = "Hostip=" + hostip
                             + ";Content-Length="+ uploadFile.length()
                             + ";filename=" + uploadFile.getName()
-                            + ";sourceid=" + (souceid==null? "" : souceid)+"\r\n";
+                            + ";sourceid=" + (sourceId == null ? "" : sourceId)+"\r\n";
 
-                    InetAddress serverAddr = InetAddress.getByName(serverip); // 初始化目标地址
-                    Socket socket = new Socket(serverAddr, MY_PORT); // 利用地址和端口定义一个Socket,
+                    InetAddress serverAddr = InetAddress.getByName(serverip);
+                    Socket socket = new Socket(serverAddr, MY_PORT);
                     socket.setSoTimeout(0);
 
                     OutputStream outStream = socket.getOutputStream();
@@ -252,7 +251,7 @@ public class FileManager extends Activity {
                     String[] items = response.split(";");
                     String responseid = items[0].substring(items[0].indexOf("=")+1);
                     String position = items[1].substring(items[1].indexOf("=")+1);
-                    if(souceid == null){//代表原来没有上传过此文件，往数据库添加一条绑定记录
+                    if(sourceId == null){
                         logService.save(responseid, uploadFile);
                     }
 
@@ -313,7 +312,7 @@ public class FileManager extends Activity {
     }
 
     private List<Map<String, Object>> getFileDir(final String filePath) {
-        final List<Map<String, Object>> newlist = new ArrayList<Map<String, Object>>();
+        final List<Map<String, Object>> newList = new ArrayList<Map<String, Object>>();
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -327,9 +326,9 @@ public class FileManager extends Activity {
                         map.put("path", file.getAbsolutePath());
                         map.put("flag", false);
                         if (num == 2) {
-                            map.put("thumbnail", thumbnail.decodeFile(file));
+                            map.put("thumbnail", Thumbnail.decodeFile(file));
                         }
-                        newlist.add(map);
+                        newList.add(map);
                     }
                 }
                 decode = true;
@@ -337,7 +336,7 @@ public class FileManager extends Activity {
         });
         thread.start();
 
-        while (decode == false){
+        while (!decode){
             try {
                 Thread.sleep(100);
             }catch (Exception e){
@@ -345,7 +344,7 @@ public class FileManager extends Activity {
             }
         }
         decode = false;
-        return newlist;
+        return newList;
     }
 
     private void cleanFlag(){

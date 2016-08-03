@@ -1,4 +1,4 @@
-package com.lanan.encrypted_file_transport.service;
+package com.lanan.encrypted_file_transport.Services;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -17,11 +17,6 @@ public class UploadLogService {
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		db.execSQL("insert into uploadlog(uploadfilepath, sourceid) values(?,?)",
 				new Object[]{uploadFile.getAbsolutePath(),sourceid});
-	}
-	
-	public void delete(File uploadFile){
-		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
-		db.execSQL("delete from uploadlog where uploadfilepath=?", new Object[]{uploadFile.getAbsolutePath()});
 	}
 	
 	public String getBindId(File uploadFile){

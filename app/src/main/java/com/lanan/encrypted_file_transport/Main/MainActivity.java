@@ -6,33 +6,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ExpandableListView;
 
+import com.lanan.encrypted_file_transport.FileTransport.ChatActivity;
 import com.lanan.encrypted_file_transport.R;
-import com.lanan.encrypted_file_transport.filetransport.ChatActivity;
-import com.lanan.encrypted_file_transport.receive.SocketServer;
-import com.lanan.encrypted_file_transport.service.NotificationService;
-import com.lanan.encrypted_file_transport.utils.Mutex;
+import com.lanan.encrypted_file_transport.Services.NotificationService;
+import com.lanan.encrypted_file_transport.Utils.Mutex;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
-import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,33 +36,21 @@ public class MainActivity extends AppCompatActivity {
 
     public static List<List<Map<String, Object>>> dataList;
 
-    private static ServerSocket server2 = null;
-    private static SocketServer server;
-	final int MY_PORT = 12024;
-
     public static Mutex mutex = new Mutex();
 
     public static LocalBroadcastManager local;
     public static BroadcastReceiver mReceiver;
-    private static IntentFilter filter;
     public static final String RECVMSG = "com.main.recvmsg";
 
     private static String goname = "";
     private static final int WRITE_STORAGE = 1;
-    private static final int READ_STORAGE = 2;
-    private static final int MOUNT = 3;
     private static final String mainPath = "/sdcard/alan/system/security/local/tmp/chs";
-//    private static final String mainPath = "/sdcard";
 
-    private Intent noticeIntent;
+    private Intent serviceIntent;
 
-    private ExpandAdapter myadapter;
+    private MainAdapter mainAdapter;
 
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        stopService(noticeIntent);
-    }
+    public static SQLiteDatabase sqLiteDatabase;
 
     @Override  
     public void onCreate(Bundle savedInstanceState) {  
@@ -76,14 +58,13 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.expandlist);
 
-        noticeIntent = new Intent(MainActivity.this, NotificationService.class);
-        startService(noticeIntent);
+        serviceIntent = new Intent().setClass(MainActivity.this, NotificationService.class);
+        startService(serviceIntent);
 
-        PermissionCheck();//权限检查
-        getTarData();//读取文件获取目标名称和ip
-        InitView();
-        regist();
-		CreateMySocket();//监听端口等待接收
+        PermissionCheck();          //权限检查
+        getTarData();               //读取文件获取目标名称和ip
+        InitView();                 //界面初始化
+        localBroadcastRegister();   //注册本地广播
     }
 
     @Override
@@ -92,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         setIntent(intent);
     }
 
-    private void regist(){
-        filter = new IntentFilter();
+    private void localBroadcastRegister(){
+        IntentFilter filter = new IntentFilter();
         filter.addAction(RECVMSG);
         Log.d("Emilio", "Main filter注册成功");
 
@@ -120,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
 
-                        String recvpath = mainPath + "/FileTransport/" + recvname;
-                        File recvfile = new File(recvpath, "historyinfo.txt");
-                        if(!recvfile.exists()){
+                        String recvPath = mainPath + "/FileTransport/" + recvname;
+                        File recvFile = new File(recvPath, "historyinfo.txt");
+                        if(!recvFile.exists()){
                             try {
-                                recvfile.createNewFile();
+                                recvFile.createNewFile();
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
@@ -142,13 +123,13 @@ public class MainActivity extends AppCompatActivity {
                             MainActivity.mutex.lock();
                         }
 
-                        RandomAccessFile recvw = new RandomAccessFile(recvfile, "rw");
-                        long filelength = recvw.length();
-                        recvw.seek(filelength);
+                        RandomAccessFile recvWrite = new RandomAccessFile(recvFile, "rw");
+                        long filelength = recvWrite.length();
+                        recvWrite.seek(filelength);
 
                         String sd = "Mode=in;Date=" + recvdate + ";Filename=" + recvfilename + "\r\n";
-                        recvw.write(sd.getBytes());
-                        recvw.close();
+                        recvWrite.write(sd.getBytes());
+                        recvWrite.close();
 
                         if(recvname.equals(goname))
                             MainActivity.mutex.unlock();
@@ -163,11 +144,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void InitView(){
-        myadapter = new ExpandAdapter(MainActivity.this, dataList);
+        mainAdapter = new MainAdapter(MainActivity.this, dataList);
 
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandlist);
         expandableListView.setGroupIndicator(null);
-        expandableListView.setAdapter(myadapter);
+        expandableListView.setAdapter(mainAdapter);
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -181,15 +162,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.parseColor("#2e40a4"));
-
-        ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
-        View mChildView = mContentView.getChildAt(0);
-        if (mChildView != null) {
-            ViewCompat.setFitsSystemWindows(mChildView, true);
-        }
+//        Window window = this.getWindow();
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.setStatusBarColor(Color.parseColor("#2e40a4"));
+//
+//        ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
+//        View mChildView = mContentView.getChildAt(0);
+//        if (mChildView != null) {
+//            ViewCompat.setFitsSystemWindows(mChildView, true);
+//        }
     }
 
     private void getTarData(){
@@ -206,37 +187,35 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        dataList = new ArrayList<List<Map<String, Object>>>();
+        dataList = new ArrayList<>();
         dataList.clear();
 
-        List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
-        List<Map<String, Object>> list2 = new ArrayList<Map<String, Object>>();
-        List<Map<String, Object>> list3 = new ArrayList<Map<String, Object>>();
-        List<Map<String, Object>> list4 = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> list1 = new ArrayList<>();
+        List<Map<String, Object>> list2 = new ArrayList<>();
+        List<Map<String, Object>> list3 = new ArrayList<>();
+        List<Map<String, Object>> list4 = new ArrayList<>();
 
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(dataFile)));
-            String tardata = null;
-            String[] items = null;
-            String[] citems = null;
+            String tardata;
             while((tardata = in.readLine()) != null){
-                items = tardata.split(";");
-                citems = items[1].split("=");
-                Map<String, Object> childmap = new HashMap<String, Object>();
-                childmap.put("name", citems[0]);
-                childmap.put("ip", citems[1]);
+                String[] items = tardata.split(";");
+                String[] citems = items[1].split("=");
+                Map<String, Object> childMap = new HashMap<>();
+                childMap.put("name", citems[0]);
+                childMap.put("ip", citems[1]);
                 switch (Integer.parseInt(items[0])){
                     case 1:
-                        list1.add(childmap);
+                        list1.add(childMap);
                         break;
                     case 2:
-                        list2.add(childmap);
+                        list2.add(childMap);
                         break;
                     case 3:
-                        list3.add(childmap);
+                        list3.add(childMap);
                         break;
                     case 4:
-                        list4.add(childmap);
+                        list4.add(childMap);
                         break;
                 }
             }
@@ -251,7 +230,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void PermissionCheck(){
-        /* 权限检查 */
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             Log.d("Permission","不能写");
@@ -259,22 +237,6 @@ public class MainActivity extends AppCompatActivity {
                     WRITE_STORAGE);
         }else
             Log.d("Permission","可以写");
-
-//        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            Log.d("Permission","不能读");
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-//                    READ_STORAGE);
-//        }else
-//            Log.d("Permission","可以读");
-//
-//        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            Log.d("Permission","没挂载");
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS},
-//                    MOUNT);
-//        }else
-//            Log.d("Permission","可挂载");
     }
 
     /* 检查当前app权限 */
@@ -289,44 +251,13 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Permission", "申请写权限失败");
                 }
                 break;
-            case READ_STORAGE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("Permission", "已获取读权限");
-                } else {
-                    Log.d("Permission", "申请读权限失败");
-                }
-                break;
-            case MOUNT:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("Permission", "已获取挂载权限");
-                } else {
-                    Log.d("Permission", "申请挂载权限失败");
-                }
-                break;
         }
     }
 
-	private void CreateSocket() 
-	{
-		try {
-			server2 = new ServerSocket(MY_PORT,100);
-			server2.setSoTimeout(0);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-
-    public boolean CreateMySocket() {
-		// 创建Socket 服务器
-		CreateSocket();
-        server = new SocketServer(server2);
-    	try {
-            server.start();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        return true;
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        stopService(serviceIntent);
+        sqLiteDatabase.close();
     }
 }  

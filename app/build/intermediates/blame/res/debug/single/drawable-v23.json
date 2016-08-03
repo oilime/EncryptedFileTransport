@@ -1,6 +1,6 @@
 [
     {
-        "merged": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/res/merged/debug/drawable-v23/abc_control_background_material.xml",
-        "source": "/home/emilio/AS_project/加密文件传输/加密文件传输(expand)/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable-v23/abc_control_background_material.xml"
+        "merged": "/home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/res/merged/debug/drawable-v23/abc_control_background_material.xml",
+        "source": "/home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable-v23/abc_control_background_material.xml"
     }
 ]
