@@ -16,12 +16,12 @@
         "source": "/home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/layout/abc_search_dropdown_item_icons_2line.xml"
     },
     {
-        "merged": "/home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
-        "source": "/home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/layout/abc_action_mode_bar.xml"
-    },
-    {
         "merged": "/home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_icon.xml",
         "source": "/home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/layout/abc_list_menu_item_icon.xml"
+    },
+    {
+        "merged": "/home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
+        "source": "/home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/layout/abc_action_mode_bar.xml"
     },
     {
         "merged": "/home/emilio/AS_project/EncryptedFileTransport/app/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
