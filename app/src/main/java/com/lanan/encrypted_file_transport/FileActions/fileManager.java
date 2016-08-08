@@ -296,7 +296,7 @@ public class fileManager extends AppCompatActivity {
                     if (uploadFile.getName().endsWith(".pro")){
                         byte[] buffer = new byte[1024];
                         int length = Integer.valueOf(position);
-                        int sendLen = -1;
+                        int sendLen;
 
                         while ((sendLen = inputStream.read(buffer)) != -1){
                             outStream.write(buffer, 0, sendLen);
@@ -308,14 +308,12 @@ public class fileManager extends AppCompatActivity {
 
                     }else {
                         byte[] encryptBuffer = new byte[1024];
-                        int length = Integer.valueOf(position);
-                        int cryptLen = -1;
+                        int cryptLen;
 
                         CipherInputStream cipherInputStream = new CipherInputStream(
                                 inputStream, encryption.cipherSet(Cipher.ENCRYPT_MODE));
                         while ((cryptLen = cipherInputStream.read(encryptBuffer)) != -1) {
                             outStream.write(encryptBuffer, 0, cryptLen);
-                            length += cryptLen;
                         }
 
                         cipherInputStream.close();
@@ -346,7 +344,7 @@ public class fileManager extends AppCompatActivity {
     }
 
     private List<Map<String, Object>> getFileDir(final String filePath) {
-        final List<Map<String, Object>> newList = new ArrayList<Map<String, Object>>();
+        final List<Map<String, Object>> newList = new ArrayList<>();
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -354,7 +352,7 @@ public class fileManager extends AppCompatActivity {
                 File[] files = f.listFiles();
                 for (File file: files) {
                     if(!file.getName().startsWith(".")){
-                        Map<String, Object> map = new HashMap<String, Object>();
+                        Map<String, Object> map = new HashMap<>();
                         map.put("name", file.getName());
                         map.put("path", file.getAbsolutePath());
                         map.put("flag", false);

@@ -24,7 +24,7 @@ public class encryption {
     static private Cipher deCipher = cipherSet(Cipher.DECRYPT_MODE);
       
     private static byte[] getKey(String password) {
-        byte[] rByte = null;
+        byte[] rByte;
         if (password != null) {
             rByte = password.getBytes();
         }else{

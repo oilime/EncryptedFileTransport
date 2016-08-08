@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -42,7 +43,7 @@ public class mainActivity extends AppCompatActivity {
 
     public static LocalBroadcastManager local;
     public static BroadcastReceiver mReceiver;
-    public static final String RECVMSG = parameters.RECVMSG;
+    public static final String RECVMSG = parameters.MAIN_RECVMSG;
 
     private static String goname = "";
     private static final int WRITE_STORAGE = 1;
@@ -78,7 +79,8 @@ public class mainActivity extends AppCompatActivity {
         filter.addAction(RECVMSG);
         Log.d("Emilio", "Main filter注册成功");
 
-        local = LocalBroadcastManager.getInstance(this);
+        if (local == null)
+            local = LocalBroadcastManager.getInstance(this);
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -233,7 +235,7 @@ public class mainActivity extends AppCompatActivity {
 
     /* 检查当前app权限 */
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case WRITE_STORAGE:

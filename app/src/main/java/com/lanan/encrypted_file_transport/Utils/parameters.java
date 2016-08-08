@@ -26,7 +26,8 @@ public class parameters {
 
     public static final String DECRYPTFILE = "com.lanan.decryptfile";
     public static final String FILE = "com.lanan.openfile";
-    public static final String RECVMSG = "com.lanan.recvmsg";
+    public static final String MAIN_RECVMSG = "com.lanan.main.recvmsg";
+    public static final String CHAT_RECVMSG = "com.lanan.chat.recvmsg";
     public static final String SENDMSG = "com.lanan.sendmsg";
 
     public static final String KEY_MANAGER = "X509";

@@ -59,7 +59,7 @@ public class chatMsgViewAdapter extends BaseAdapter {
 		chatMsgEntity entity = coll.get(position);
 		final boolean isComMsg = entity.getMsgType();
 
-		ViewHolder viewHolder = null;
+		ViewHolder viewHolder;
 		if (convertView == null) {
 			if (isComMsg) {
 				convertView = mInflater.inflate(R.layout.msg_left, null);

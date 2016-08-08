@@ -51,6 +51,7 @@ public class notificationService extends Service {
 	private SimpleDateFormat newFormat = parameters.newFormat;
 
     private static SSLServerSocket serverSocket;
+    private static boolean recvFlag;
 
 	private ExecutorService executorService;
     private Map<Long, FileLog> datas = new HashMap<>();
@@ -192,10 +193,10 @@ public class notificationService extends Service {
 						id = Long.valueOf(sourceId);
 						log = find(id);
 					}
-					File file = null;
+					File file;
 					int position = 0;
 					if(log == null){
-						String appHome = "";
+						String appHome;
 						if (filename.endsWith(".pro")){
 							appHome = mainPath + "/.config/";
 						} else if(!recvName.isEmpty()){
@@ -232,8 +233,7 @@ public class notificationService extends Service {
 					outStream.write(response.getBytes());
 
 					byte[] buffer = new byte[4096];
-					int len = -1;
-					int length = position;
+					int len;
 
 					try{
 						RandomAccessFile fileOutStream = new RandomAccessFile(file, "rwd");
@@ -242,7 +242,6 @@ public class notificationService extends Service {
 						fileOutStream.seek(position);
 						while ((len = input.read(buffer)) != -1){
 							fileOutStream.write(buffer, 0, len);
-							length += len;
 						}
 						delete(id);
 						fileOutStream.close();
@@ -339,8 +338,12 @@ public class notificationService extends Service {
 		try {
             File file = new File(filePath);
 			if (!file.exists()) {
-                boolean recvFlag = file.mkdir();
+                recvFlag = file.mkdir();
 			}
+
+			if (!recvFlag){
+                Log.d("Emilio", "相应目录创建失败");
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

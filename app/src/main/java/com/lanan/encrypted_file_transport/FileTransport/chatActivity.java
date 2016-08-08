@@ -47,15 +47,15 @@ public class chatActivity extends AppCompatActivity{
 	public static BroadcastReceiver mReceiver;
 
 	private static String objname;
-	private static String objpath;
 	private static String serverip;
 	private static String hostip;
+	private static boolean recvFlag = false;
 
 	private static File info;
 
 	public static final String DECRYPTFILE = parameters.DECRYPTFILE;
 	public static final String FILE = parameters.FILE;
-	public static final String RECVMSG = parameters.RECVMSG;
+	public static final String RECVMSG = parameters.CHAT_RECVMSG;
     public static final String SENDMSG = parameters.SENDMSG;
 
 	private static final String mainPath = parameters.mainPath;
@@ -115,8 +115,12 @@ public class chatActivity extends AppCompatActivity{
 					final File file = new File(filename);
 					File tempDir = new File(mainPath + "/Filetransport/temp/");
 					if (!tempDir.exists() || !tempDir.isDirectory()){
-						tempDir.mkdirs();
+						recvFlag = tempDir.mkdirs();
 					}
+
+                    if (!recvFlag){
+                        Log.d("Emilio", "临时文件夹创建失败");
+                    }
 					final File tmpFile = new File(tempDir, file.getName());
 					if(file.exists()){
 						pDialog.setMessage("解密中...");
@@ -325,7 +329,8 @@ public class chatActivity extends AppCompatActivity{
 		});
 
 		tarName = (TextView) findViewById(R.id.tarName);
-		tarName.setText(objname);
+        if (objname.equals(""))
+		    tarName.setText(objname);
 
 		pDialog = new ProgressDialog(chatActivity.this);
 		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -337,19 +342,22 @@ public class chatActivity extends AppCompatActivity{
 	public void initData() {
 		mDataArrays.clear();
 		objname = getIntent().getStringExtra("tarname");
-		objpath = mainPath + "/FileTransport/" + objname;
 		serverip = getIntent().getStringExtra("ip");
 		hostip = getLocalIpAddress();
 
-		File savePath = new File(objpath);
+		File savePath = new File(mainPath + "/FileTransport/" + objname);
 		if(!savePath.exists() || !savePath.isDirectory()){
-			savePath.mkdirs();
+			recvFlag = savePath.mkdirs();
 		}
+
+        if (!recvFlag){
+            Log.d("Emilio", "对应文件夹创建失败");
+        }
 
 		info = new File(savePath, "historyinfo.txt");
 		if(!info.exists()){
 			try {
-				info.createNewFile();
+				recvFlag = info.createNewFile();
 			}catch (Exception e){
 				e.printStackTrace();
 			}
@@ -358,8 +366,8 @@ public class chatActivity extends AppCompatActivity{
 		try {
 			mainActivity.mutex.lock();
 			BufferedReader br = new BufferedReader(new FileReader(info));
-			String tarData = null;
-			String[] items = null;
+			String tarData;
+			String[] items;
 			while((tarData = br.readLine()) != null){
 				items = tarData.split(";");
 				String mode = items[0].substring(items[0].indexOf("=") + 1);
@@ -402,23 +410,39 @@ public class chatActivity extends AppCompatActivity{
 	}
 
 	private static String getMIMEType(File f) {
-		String type = null;
+		String type;
 		String fName = f.getName();
 		String end = fName.substring(fName.lastIndexOf(".") + 1, fName.length()).toLowerCase();
 
-		if (end.equals("m4a") || end.equals("mp3") || end.equals("mid")
-				|| end.equals("xmf") || end.equals("ogg") || end.equals("wav")) {
-			type = "audio";
-		} else if (end.equals("3gp") || end.equals("mp4")|| end.equals("avi")) {
-			type = "video";
-		} else if (end.equals("jpg") || end.equals("gif") || end.equals("png")
-				|| end.equals("jpeg") || end.equals("bmp")) {
-			type = "image";
-		} else if (end.equals("txt")) {
-			type = "text";
-		} else {
-            type = "*";
+		switch (end){
+            case "m4a":
+            case "mp3":
+            case "mid":
+            case "xmf":
+            case "ogg":
+            case "wav":
+                type = "audio";
+                break;
+            case "3gp":
+            case "mp4":
+            case "avi":
+                type = "video";
+                break;
+            case "jpg":
+            case "gif":
+            case "png":
+            case "jpeg":
+            case "bmp":
+                type = "image";
+                break;
+            case "txt":
+                type = "text";
+                break;
+            default:
+                type = "*";
+                break;
         }
+
 		type += "/*";
 		return type;
 	}
