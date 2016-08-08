@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -35,8 +36,9 @@ import java.util.Map;
 public class mainActivity extends AppCompatActivity {
 
     public static List<List<Map<String, Object>>> dataList;
+    public static boolean isAbove = Build.VERSION.SDK_INT >= 21;
 
-    public static com.lanan.encrypted_file_transport.Utils.mutex mutex = new mutex();
+    public static mutex mutex = new mutex();
 
     public static LocalBroadcastManager local;
     public static BroadcastReceiver mReceiver;
@@ -160,15 +162,7 @@ public class mainActivity extends AppCompatActivity {
             }
         });
 
-//        Window window = this.getWindow();
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.setStatusBarColor(Color.parseColor("#2e40a4"));
-//
-//        ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
-//        View mChildView = mContentView.getChildAt(0);
-//        if (mChildView != null) {
-//            ViewCompat.setFitsSystemWindows(mChildView, true);
-//        }
+        parameters.setStatusBarColor(this, isAbove);
     }
 
     private void getTarData(){
@@ -255,6 +249,7 @@ public class mainActivity extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
+        local.unregisterReceiver(mReceiver);
         stopService(serviceIntent);
     }
 }  

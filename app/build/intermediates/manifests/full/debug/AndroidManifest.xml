@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.NoActionBar" >
         <activity
-            android:name="com.lanan.encrypted_file_transport.Main.MainActivity"
+            android:name="com.lanan.encrypted_file_transport.Main.mainActivity"
             android:launchMode="singleInstance" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,21 +29,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.lanan.encrypted_file_transport.FileTransport.ChatActivity"
+            android:name="com.lanan.encrypted_file_transport.FileTransport.chatActivity"
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name="com.lanan.encrypted_file_transport.FileActions.FileManager"
+            android:name="com.lanan.encrypted_file_transport.FileActions.fileManager"
             android:launchMode="singleInstance" >
         </activity>
 
-        <service android:name="com.lanan.encrypted_file_transport.Services.NotificationService" >
+        <service android:name="com.lanan.encrypted_file_transport.Services.notificationService" >
             <intent-filter>
                 <action android:name="NotificationService" />
             </intent-filter>
         </service>
 
-        <receiver android:name="com.lanan.encrypted_file_transport.Services.MyBroadcastReceiver" >
+        <receiver android:name="com.lanan.encrypted_file_transport.Services.myBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
 

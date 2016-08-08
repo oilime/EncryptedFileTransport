@@ -40,16 +40,8 @@ import java.util.List;
 
 public class chatActivity extends AppCompatActivity{
 
-	private ImageView mBtnSend;
-	private ImageView mBtnBack;
-	private ListView mListView;
-	private chatMsgViewAdapter mAdapter;
-	private TextView tarName;
-	private static ProgressDialog pDialog;
-
 	public List<chatMsgEntity> mDataArrays = new ArrayList<>();
 	private static Vibrator vibrator;
-	private static IntentFilter filter;
 
 	public static LocalBroadcastManager local;
 	public static BroadcastReceiver mReceiver;
@@ -73,6 +65,13 @@ public class chatActivity extends AppCompatActivity{
 	private static final String docDir = parameters.docDir;
 	private static final String tempDir = parameters.tempDir;
 	public static final String[] dir = new String[]{musicDir, videoDir, imageDir, docDir, tempDir};
+
+    ImageView mBtnSend;
+    ImageView mBtnBack;
+    ListView mListView;
+    chatMsgViewAdapter mAdapter;
+    TextView tarName;
+    ProgressDialog pDialog;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -99,7 +98,7 @@ public class chatActivity extends AppCompatActivity{
 	private void register(){
 		vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
-		filter = new IntentFilter();
+        IntentFilter filter = new IntentFilter();
 		filter.addAction(DECRYPTFILE);
 		filter.addAction(FILE);
 		filter.addAction(RECVMSG);
@@ -228,6 +227,8 @@ public class chatActivity extends AppCompatActivity{
 	private void initView() {
 		mListView = (ListView) findViewById(R.id.listview);
 		mAdapter = new chatMsgViewAdapter(this, mDataArrays);
+		mListView.setAdapter(mAdapter);
+        mListView.setSelection(mListView.getCount() - 1);
 
 		mBtnSend = (ImageView) findViewById(R.id.select_button);
 		mBtnSend.setOnClickListener(new OnClickListener() {
@@ -330,20 +331,7 @@ public class chatActivity extends AppCompatActivity{
 		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		pDialog.setCanceledOnTouchOutside(false);
 
-
-//		mAdapter = new chatMsgViewAdapter(this, mDataArrays);
-//		mListView.setAdapter(mAdapter);
-//		mListView.setSelection(mAdapter.getCount() - 1);
-//
-//		Window window = this.getWindow();
-//		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//		window.setStatusBarColor(Color.parseColor("#2e40a4"));
-//
-//		ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
-//		View mChildView = mContentView.getChildAt(0);
-//		if (mChildView != null) {
-//			ViewCompat.setFitsSystemWindows(mChildView, true);
-//		}
+		parameters.setStatusBarColor(this, mainActivity.isAbove);
 	}
 
 	public void initData() {
@@ -417,6 +405,7 @@ public class chatActivity extends AppCompatActivity{
 		String type = null;
 		String fName = f.getName();
 		String end = fName.substring(fName.lastIndexOf(".") + 1, fName.length()).toLowerCase();
+
 		if (end.equals("m4a") || end.equals("mp3") || end.equals("mid")
 				|| end.equals("xmf") || end.equals("ogg") || end.equals("wav")) {
 			type = "audio";
@@ -425,9 +414,11 @@ public class chatActivity extends AppCompatActivity{
 		} else if (end.equals("jpg") || end.equals("gif") || end.equals("png")
 				|| end.equals("jpeg") || end.equals("bmp")) {
 			type = "image";
+		} else if (end.equals("txt")) {
+			type = "text";
 		} else {
-			type = "*";
-		}
+            type = "*";
+        }
 		type += "/*";
 		return type;
 	}

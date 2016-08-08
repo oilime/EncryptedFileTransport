@@ -1,9 +1,9 @@
 package com.lanan.encrypted_file_transport.FileActions;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -17,11 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lanan.encrypted_file_transport.FileTransport.chatActivity;
+import com.lanan.encrypted_file_transport.Main.mainActivity;
 import com.lanan.encrypted_file_transport.R;
 import com.lanan.encrypted_file_transport.Services.uploadLogService;
 import com.lanan.encrypted_file_transport.Utils.encryption;
-import com.lanan.encrypted_file_transport.Utils.streamTool;
 import com.lanan.encrypted_file_transport.Utils.getThumbnail;
+import com.lanan.encrypted_file_transport.Utils.parameters;
+import com.lanan.encrypted_file_transport.Utils.streamTool;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,7 +31,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PushbackInputStream;
 import java.net.InetAddress;
-import java.net.Socket;
+import java.security.KeyStore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,8 +41,13 @@ import java.util.Map;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 
-public class fileManager extends Activity {
+public class fileManager extends AppCompatActivity {
 
     private ListView listView;
     private GridView gridView;
@@ -57,11 +64,18 @@ public class fileManager extends Activity {
     private static Boolean decode = false;
     private static List<Map<String, Object>> mdatalist = null;
 
-    private SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static SSLContext ctx;
+
+    private SimpleDateFormat timeFormat = parameters.newFormat;
 
     private uploadLogService logService;
 
     ProgressDialog pDialog;
+    TextView mPath;
+    ImageView backButton;
+    Button sendButton;
+    LinearLayout cancel;
+    LinearLayout selectAll;
 
     final int MY_PORT = 10717;
 
@@ -69,6 +83,7 @@ public class fileManager extends Activity {
     protected void onCreate(Bundle test){
         super.onCreate(test);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         Bundle pathBundle = getIntent().getExtras();
         rootPath = pathBundle.getString("path");
         pathName = pathBundle.getString("name");
@@ -76,10 +91,6 @@ public class fileManager extends Activity {
         serverip = pathBundle.getString("serverip");
         hostip = pathBundle.getString("hostip");
         mdatalist = new ArrayList<>();
-
-        Log.d("Emilio","path="+rootPath+" name="+pathName+" flag="+image);
-
-        logService = new uploadLogService(this);
 
         switch (pathName){
             case "音频":
@@ -96,6 +107,8 @@ public class fileManager extends Activity {
                 break;
         }
 
+        logService = new uploadLogService(this);
+
         mdatalist.clear();
         mdatalist = getFileDir(chatActivity.dir[num]);
 
@@ -103,12 +116,6 @@ public class fileManager extends Activity {
     }
 
     private void initViews(){
-        TextView mPath;
-        ImageView backButton;
-        Button sendButton;
-        LinearLayout cancel;
-        LinearLayout selectAll;
-
         if (image){
             setContentView(R.layout.showfile_img);
             gridView = (GridView) findViewById(R.id.mygrid);
@@ -118,7 +125,7 @@ public class fileManager extends Activity {
             backButton = (ImageView) findViewById(R.id.img_backbutton);
             sendButton = (Button) findViewById(R.id.img_sendbutton);
             mPath = (TextView) findViewById(R.id.img_title);
-        } else{
+        }else {
             setContentView(R.layout.showfile_regular);
             listView = (ListView) findViewById(R.id.mylist);
 
@@ -211,15 +218,47 @@ public class fileManager extends Activity {
             listView.setAdapter(adapter);
         }
 
-//        Window window = this.getWindow();
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.setStatusBarColor(Color.parseColor("#2e40a4"));
-//
-//        ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
-//        View mChildView = mContentView.getChildAt(0);
-//        if (mChildView != null) {
-//            ViewCompat.setFitsSystemWindows(mChildView, true);
-//        }
+        parameters.setStatusBarColor(this, mainActivity.isAbove);
+        sslInit();
+    }
+
+    private void sslInit() {
+        try {
+            //初始化加密密钥库和信任密钥库
+            KeyStore clientKeyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            KeyStore trustedKeyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            try {
+                clientKeyStore.load(getBaseContext().getResources().getAssets().open("Client.bks"),
+                        parameters.KEY_STORE_PWD.toCharArray());
+                trustedKeyStore.load(getBaseContext().getResources().getAssets().open("trustedClient.bks"),
+                        parameters.KEY_STORE_PWD.toCharArray());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            //初始化密钥管理器和信任管理器
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(parameters.KEY_MANAGER);
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(parameters.KEY_MANAGER);
+            try {
+                keyManagerFactory.init(clientKeyStore, parameters.KEY_STORE_PWD.toCharArray());
+                trustManagerFactory.init(trustedKeyStore);
+                Log.d("Emilio", "信任密钥管理器加载完毕");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            //初始化SSL上下文
+            ctx = SSLContext.getInstance("TLS");
+            Log.d("Emilio", "SSL模式选择成功");
+            try {
+                ctx.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
+                Log.d("Emilio", "SSL上下文初始化成功");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /* 文件发送 */
@@ -235,21 +274,21 @@ public class fileManager extends Activity {
                             + ";sourceid=" + (sourceId == null ? "" : sourceId)+"\r\n";
 
                     InetAddress serverAddr = InetAddress.getByName(serverip);
-                    Socket socket = new Socket(serverAddr, MY_PORT);
+                    SSLSocketFactory ssf = ctx.getSocketFactory();
+                    SSLSocket socket = (SSLSocket) ssf.createSocket(serverAddr, MY_PORT);
                     socket.setSoTimeout(0);
 
                     OutputStream outStream = socket.getOutputStream();
                     outStream.write(head.getBytes());
                     PushbackInputStream inStream = new PushbackInputStream(socket.getInputStream());
-                    String response = streamTool.readLine(inStream);
-
                     Log.d("Emilio", "socket成功");
 
+                    String response = streamTool.readLine(inStream);
                     String[] items = response.split(";");
-                    String responseid = items[0].substring(items[0].indexOf("=")+1);
+                    String responseId = items[0].substring(items[0].indexOf("=")+1);
                     String position = items[1].substring(items[1].indexOf("=")+1);
                     if(sourceId == null){
-                        logService.save(responseid, uploadFile);
+                        logService.save(responseId, uploadFile);
                     }
 
                     InputStream inputStream = new FileInputStream(uploadFile);
@@ -283,7 +322,7 @@ public class fileManager extends Activity {
                     }
 
                     Date curDate = new Date(System.currentTimeMillis());
-                    String senddate	= newFormat.format(curDate);
+                    String senddate	= timeFormat.format(curDate);
 
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
@@ -298,8 +337,6 @@ public class fileManager extends Activity {
                     inStream.close();
                     outStream.close();
                     socket.close();
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("Emilio", "socket失败");
@@ -315,8 +352,7 @@ public class fileManager extends Activity {
             public void run() {
                 File f = new File(filePath);
                 File[] files = f.listFiles();
-                for (int i = 0; i < files.length; i++) {
-                    File file = files[i];
+                for (File file: files) {
                     if(!file.getName().startsWith(".")){
                         Map<String, Object> map = new HashMap<String, Object>();
                         map.put("name", file.getName());

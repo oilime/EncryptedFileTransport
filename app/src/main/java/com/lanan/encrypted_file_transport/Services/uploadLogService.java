@@ -24,8 +24,10 @@ public class uploadLogService {
 		Cursor cursor = db.rawQuery("select sourceid from uploadlog where uploadfilepath=?", 
 				new String[]{uploadFile.getAbsolutePath()});
 		if(cursor.moveToFirst()){
-			return cursor.getString(0);
-		}
+            String ret = cursor.getString(0);
+            cursor.close();
+			return ret;
+        }
 		return null;
 	}
 }

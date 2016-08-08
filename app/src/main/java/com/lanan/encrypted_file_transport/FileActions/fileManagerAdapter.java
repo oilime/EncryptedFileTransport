@@ -25,9 +25,9 @@ public class fileManagerAdapter extends BaseAdapter {
     private int[] resId = new int[]{R.drawable.music,R.drawable.video,
                                     R.drawable.image, R.drawable.doc};
 
-    public fileManagerAdapter(Context context, List<Map<String, Object>> datalist) {
+    public fileManagerAdapter(Context context, List<Map<String, Object>> dataList) {
         mInflater = LayoutInflater.from(context);
-        this.mlist = datalist;
+        this.mlist = dataList;
         this.image = fileManager.image;
         this.which = fileManager.num;
     }
@@ -59,12 +59,12 @@ public class fileManagerAdapter extends BaseAdapter {
                 convertView = mInflater.inflate(R.layout.adapter_regular, null);
                 holder = new ViewHolder();
                 holder.text = (TextView) convertView.findViewById(R.id.file_name);
-                holder.thunmbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
+                holder.thumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
                 holder.check = (ImageView) convertView.findViewById(R.id.rcheck);
             } else {
                 convertView = mInflater.inflate(R.layout.adapter_img, null);
                 holder = new ViewHolder();
-                holder.thunmbnail = (ImageView) convertView.findViewById(R.id.thumbn);
+                holder.thumbnail = (ImageView) convertView.findViewById(R.id.thumbn);
                 holder.check = (ImageView) convertView.findViewById(R.id.scheck);
             }
             convertView.setTag(holder);
@@ -78,15 +78,15 @@ public class fileManagerAdapter extends BaseAdapter {
 
         if (!image){
             holder.text.setText(filename);
-            holder.thunmbnail.setImageResource(resId[which%4]);
+            holder.thumbnail.setImageResource(resId[which%4]);
             holder.check.setVisibility(View.VISIBLE);
         } else {
             if (!mlist.get(position).containsKey("thumbnail")){
                 Bitmap bitmap = getThumbnail.decodeFile(f);
                 mlist.get(position).put("thumbnail", bitmap);
-                holder.thunmbnail.setImageBitmap(bitmap);
+                holder.thumbnail.setImageBitmap(bitmap);
             } else {
-                holder.thunmbnail.setImageBitmap((Bitmap) mlist.get(position).get("thumbnail"));
+                holder.thumbnail.setImageBitmap((Bitmap) mlist.get(position).get("thumbnail"));
             }
         }
 
@@ -102,7 +102,7 @@ public class fileManagerAdapter extends BaseAdapter {
 
     private class ViewHolder {
         TextView text;
-        ImageView thunmbnail;
+        ImageView thumbnail;
         ImageView check;
     }
 }

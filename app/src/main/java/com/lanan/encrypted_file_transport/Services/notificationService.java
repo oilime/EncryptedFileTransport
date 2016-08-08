@@ -24,29 +24,33 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.KeyStore;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.TrustManagerFactory;
 
 public class notificationService extends Service {
 
 	private static int messageNotificationID = 1000;
+
+    private static final String mainPath = parameters.mainPath;
 	private static Notification messageNotification = null;
 	private static NotificationManager messageNotificationManager = null;
+
 	private RemoteViews customView;
-	private SimpleDateFormat newFormat = new SimpleDateFormat("HH:mm:ss");
+	private SimpleDateFormat newFormat = parameters.newFormat;
 
-	private static ServerSocket serverSocket;
-
-	private static final String mainPath = parameters.mainPath;
-    private static final String ALLCHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static SSLServerSocket serverSocket;
 
 	private ExecutorService executorService;
     private Map<Long, FileLog> datas = new HashMap<>();
@@ -59,12 +63,6 @@ public class notificationService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		try {
-			serverSocket = new ServerSocket(MY_PORT,100);
-			serverSocket.setSoTimeout(0);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 		customView = new RemoteViews(getPackageName(), R.layout.customerview);
 
@@ -87,11 +85,12 @@ public class notificationService extends Service {
 
 		executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 50);
 
-		Thread thread = new Thread(new Runnable() {
+        init();
+        Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while (true){
-					Socket socket = null;
+					Socket socket;
 					try {
 						socket = serverSocket.accept();
 						executorService.execute(new SocketTask(socket));
@@ -105,6 +104,53 @@ public class notificationService extends Service {
 
 		return super.onStartCommand(intent, flags, startId);
 	}
+
+    private void init() {
+        try {
+            //初始化加密密钥库和信任密钥库
+            KeyStore serverKeyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            KeyStore trustedKeyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            try {
+                serverKeyStore.load(getBaseContext().getResources().getAssets().open("Server.bks"),
+                        parameters.KEY_STORE_PWD.toCharArray());
+                trustedKeyStore.load(getBaseContext().getResources().getAssets().open("trustedServer.bks"),
+                        parameters.KEY_STORE_PWD.toCharArray());
+            }catch (Exception e){
+                Log.d("Emilio", e.toString());
+            }
+
+            //初始化密钥管理器和信任管理器
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(parameters.KEY_MANAGER);
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(parameters.KEY_MANAGER);
+            try {
+                keyManagerFactory.init(serverKeyStore, parameters.KEY_STORE_PWD.toCharArray());
+                trustManagerFactory.init(trustedKeyStore);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            //初始化SSL上下文
+            SSLContext ctx = SSLContext.getInstance("TLS");
+            try {
+                ctx.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            //初始化server socket
+            try {
+                serverSocket = (SSLServerSocket)ctx.getServerSocketFactory().createServerSocket(MY_PORT);
+                serverSocket.setSoTimeout(0);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            //初始化线程池
+            executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 50);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 	private class SocketTask implements Runnable {
 		private Socket socket;
@@ -224,8 +270,8 @@ public class notificationService extends Service {
                             recvName = "未知用户";
                             for(int i = 0; i < mainActivity.dataList.size(); i++){
                                 for (int j = 0; j < mainActivity.dataList.get(i).size(); j++){
-                                    String testip = (String) mainActivity.dataList.get(i).get(j).get("ip");
-                                    if(testip.equals(hostip)){
+                                    String testIp = (String) mainActivity.dataList.get(i).get(j).get("ip");
+                                    if(testIp.equals(hostip)){
                                         recvName = (String) mainActivity.dataList.get(i).get(j).get("name");
                                         break;
                                     }
@@ -290,23 +336,13 @@ public class notificationService extends Service {
 	}
 
 	public static void createDir(String filePath) {
-		File file = null;
 		try {
-			file = new File(filePath);
+            File file = new File(filePath);
 			if (!file.exists()) {
-				file.mkdir();
+                boolean recvFlag = file.mkdir();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-    public static String getRandomId(int length) {
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < length; i++) {
-            sb.append(ALLCHAR.charAt(random.nextInt(ALLCHAR.length())));
-        }
-        return sb.toString();
-    }
 }

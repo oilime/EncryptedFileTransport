@@ -14,12 +14,12 @@ public class appAlive {
                 = activityManager.getRunningAppProcesses();
         for(int i = 0; i < processInfos.size(); i++){
             if(processInfos.get(i).processName.equals(packageName)){
-                Log.i("NotificationLaunch",
+                Log.i("Emilio",
                         String.format("the %s is running, isAppAlive return true", packageName));
                 return true;
             }
         }
-        Log.i("NotificationLaunch",
+        Log.i("Emilio",
                 String.format("the %s is not running, isAppAlive return false", packageName));
         return false;
     }

@@ -7,7 +7,6 @@ import android.content.Intent;
 import com.lanan.encrypted_file_transport.Main.mainActivity;
 import com.lanan.encrypted_file_transport.Utils.appAlive;
 
-
 public class myBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -9,6 +9,7 @@
       <w>goname</w>
       <w>historyinfo</w>
       <w>hostip</w>
+      <w>infos</w>
       <w>lanan</w>
       <w>mdatalist</w>
       <w>mlist</w>
@@ -16,6 +17,7 @@
       <w>objname</w>
       <w>objpath</w>
       <w>openfile</w>
+      <w>pkcs</w>
       <w>recv</w>
       <w>recvdate</w>
       <w>recvfilename</w>
@@ -32,6 +34,8 @@
       <w>sourceid</w>
       <w>svideo</w>
       <w>tarname</w>
+      <w>uploadfilepath</w>
+      <w>uploadlog</w>
     </words>
   </dictionary>
 </component>
