@@ -25,11 +25,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lanan.encrypted_file_transport.file_manage.fileManager;
-import com.lanan.encrypted_file_transport.main.mainActivity;
+import com.lanan.encrypted_file_transport.file_manage.FileManager;
+import com.lanan.encrypted_file_transport.main.MainActivity;
 import com.lanan.encrypted_file_transport.R;
-import com.lanan.encrypted_file_transport.utils.encryption;
-import com.lanan.encrypted_file_transport.utils.parameters;
+import com.lanan.encrypted_file_transport.utils.Encryption;
+import com.lanan.encrypted_file_transport.utils.Parameters;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,9 +38,9 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class chatActivity extends AppCompatActivity{
+public class ChatActivity extends AppCompatActivity{
 
-	public List<chatMsgEntity> mDataArrays = new ArrayList<>();
+	public List<ChatMsgEntity> mDataArrays = new ArrayList<>();
 	private static Vibrator vibrator;
 
 	public static LocalBroadcastManager local;
@@ -53,17 +53,17 @@ public class chatActivity extends AppCompatActivity{
 
 	private static File info;
 
-	public static final String DECRYPTFILE = parameters.DECRYPTFILE;
-	public static final String FILE = parameters.FILE;
-	public static final String RECVMSG = parameters.CHAT_RECVMSG;
-    public static final String SENDMSG = parameters.SENDMSG;
+	public static final String DECRYPTFILE = Parameters.DECRYPTFILE;
+	public static final String FILE = Parameters.FILE;
+	public static final String RECVMSG = Parameters.CHAT_RECVMSG;
+    public static final String SENDMSG = Parameters.SENDMSG;
 
-	private static final String mainPath = parameters.mainPath;
-	private static final String musicDir = parameters.musicDir;
-	private static final String videoDir = parameters.videoDir;
-	private static final String imageDir = parameters.imageDir;
-	private static final String docDir = parameters.docDir;
-	private static final String tempDir = parameters.tempDir;
+	private static final String mainPath = Parameters.mainPath;
+	private static final String musicDir = Parameters.musicDir;
+	private static final String videoDir = Parameters.videoDir;
+	private static final String imageDir = Parameters.imageDir;
+	private static final String docDir = Parameters.docDir;
+	private static final String tempDir = Parameters.tempDir;
 	public static final String[] dir = new String[]{musicDir, videoDir, imageDir, docDir, tempDir};
 
     ImageView mBtnSend;
@@ -71,7 +71,7 @@ public class chatActivity extends AppCompatActivity{
     ListView mListView;
     TextView tarName;
     ProgressDialog pDialog;
-	chatMsgViewAdapter mAdapter;
+	ChatMsgViewAdapter mAdapter;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -135,7 +135,7 @@ public class chatActivity extends AppCompatActivity{
 								try{
 									Thread.sleep(500);
 									if(!tmpFile.exists()){
-										encryption.fileDecrypt(file, tmpFile);
+										Encryption.fileDecrypt(file, tmpFile);
 									}
 									pDialog.dismiss();
 									Intent intent = new Intent();
@@ -150,7 +150,7 @@ public class chatActivity extends AppCompatActivity{
 							}
 						}.start();
 					}else {
-						Toast.makeText(chatActivity.this, "该文件已被删除或转移到其他位置", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ChatActivity.this, "该文件已被删除或转移到其他位置", Toast.LENGTH_SHORT).show();
 					}
 				}else if (intent.getAction().equals(FILE)){
 					String filename = intent.getStringExtra("filename");
@@ -171,7 +171,7 @@ public class chatActivity extends AppCompatActivity{
                             }
                         }.start();
                     }else
-                        Toast.makeText(chatActivity.this, "该文件已被删除或转移到其他位置", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChatActivity.this, "该文件已被删除或转移到其他位置", Toast.LENGTH_SHORT).show();
                 }else if (intent.getAction().equals(RECVMSG)){
                     try {
                         Log.d("Emilio", "接收到CHAT_RECVMSG广播");
@@ -181,7 +181,7 @@ public class chatActivity extends AppCompatActivity{
 						String recvFilename = bundle.getString("recvfilename");
 						String recvName = bundle.getString("recvname");
 
-                        chatMsgEntity recvEntity = new chatMsgEntity();
+                        ChatMsgEntity recvEntity = new ChatMsgEntity();
                         recvEntity.setName(recvName);
                         recvEntity.setDate(recvDate);
                         recvEntity.setMessage(recvFilename);
@@ -200,7 +200,7 @@ public class chatActivity extends AppCompatActivity{
                         String senddate = bundle.getString("senddate");
                         String sendfilename = bundle.getString("sendfilename");
 
-                        chatMsgEntity sendEntity = new chatMsgEntity();
+                        ChatMsgEntity sendEntity = new ChatMsgEntity();
                         sendEntity.setDate(senddate);
                         sendEntity.setMessage(sendfilename);
                         sendEntity.setMsgType(false);
@@ -209,7 +209,7 @@ public class chatActivity extends AppCompatActivity{
                         mAdapter.notifyDataSetChanged();
                         mListView.setSelection(mListView.getCount() - 1);
 
-                        mainActivity.mutex.lock();
+                        MainActivity.mutex.lock();
                         RandomAccessFile sendw = new RandomAccessFile(info, "rw");
                         long fileLength = sendw.length();
                         sendw.seek(fileLength);
@@ -218,7 +218,7 @@ public class chatActivity extends AppCompatActivity{
                         sendw.write(sd.getBytes());
                         sendw.close();
                         vibrator.vibrate(1000);
-                        mainActivity.mutex.unlock();
+                        MainActivity.mutex.unlock();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -230,7 +230,7 @@ public class chatActivity extends AppCompatActivity{
 
 	private void initView() {
 		mListView = (ListView) findViewById(R.id.listview);
-		mAdapter = new chatMsgViewAdapter(this, mDataArrays);
+		mAdapter = new ChatMsgViewAdapter(this, mDataArrays);
 		mListView.setAdapter(mAdapter);
         mListView.setSelection(mListView.getCount() - 1);
 
@@ -238,7 +238,7 @@ public class chatActivity extends AppCompatActivity{
 		mBtnSend.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(chatActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
                 final AlertDialog alertDialog = builder.create();
                 alertDialog.setCanceledOnTouchOutside(true);
                 alertDialog.show();
@@ -254,7 +254,7 @@ public class chatActivity extends AppCompatActivity{
                 smusic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(chatActivity.this, fileManager.class);
+                        Intent intent = new Intent(ChatActivity.this, FileManager.class);
                         Bundle des = new Bundle();
                         des.putString("path",dir[0]);
                         des.putString("name","音频");
@@ -270,7 +270,7 @@ public class chatActivity extends AppCompatActivity{
                 svideo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(chatActivity.this, fileManager.class);
+                        Intent intent = new Intent(ChatActivity.this, FileManager.class);
                         Bundle des = new Bundle();
                         des.putString("path",dir[1]);
                         des.putString("name","视频");
@@ -286,7 +286,7 @@ public class chatActivity extends AppCompatActivity{
                 simage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(chatActivity.this, fileManager.class);
+                        Intent intent = new Intent(ChatActivity.this, FileManager.class);
                         Bundle des = new Bundle();
                         des.putString("path",dir[2]);
                         des.putString("name","图片");
@@ -302,7 +302,7 @@ public class chatActivity extends AppCompatActivity{
                 sdoc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(chatActivity.this, fileManager.class);
+                        Intent intent = new Intent(ChatActivity.this, FileManager.class);
                         Bundle des = new Bundle();
                         des.putString("path",dir[3]);
                         des.putString("name","文档");
@@ -322,7 +322,7 @@ public class chatActivity extends AppCompatActivity{
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
-				intent.setClass(chatActivity.this, mainActivity.class);
+				intent.setClass(ChatActivity.this, MainActivity.class);
                 startActivity(intent);
 				finish();
 			}
@@ -332,11 +332,11 @@ public class chatActivity extends AppCompatActivity{
         if (objname.equals(""))
 		    tarName.setText(objname);
 
-		pDialog = new ProgressDialog(chatActivity.this);
+		pDialog = new ProgressDialog(ChatActivity.this);
 		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		pDialog.setCanceledOnTouchOutside(false);
 
-		parameters.setStatusBarColor(this, mainActivity.isAbove);
+		Parameters.setStatusBarColor(this, MainActivity.isAbove);
 	}
 
 	public void initData() {
@@ -364,7 +364,7 @@ public class chatActivity extends AppCompatActivity{
 		}
 
 		try {
-			mainActivity.mutex.lock();
+			MainActivity.mutex.lock();
 			BufferedReader br = new BufferedReader(new FileReader(info));
 			String tarData;
 			String[] items;
@@ -374,7 +374,7 @@ public class chatActivity extends AppCompatActivity{
 				String date = items[1].substring(items[1].indexOf("=") + 1);
 				String filename = items[2].substring(items[2].indexOf("=") + 1);
 
-				chatMsgEntity entity = new chatMsgEntity();
+				ChatMsgEntity entity = new ChatMsgEntity();
 				entity.setDate(date);
 				entity.setMessage(filename);
 				if (mode.equals("in")){
@@ -387,7 +387,7 @@ public class chatActivity extends AppCompatActivity{
 				mDataArrays.add(entity);
 			}
 			br.close();
-			mainActivity.mutex.unlock();
+			MainActivity.mutex.unlock();
 		}catch (Exception e){
 			e.printStackTrace();
 		}

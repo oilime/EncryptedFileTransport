@@ -16,14 +16,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lanan.encrypted_file_transport.file_transport.chatActivity;
-import com.lanan.encrypted_file_transport.main.mainActivity;
+import com.lanan.encrypted_file_transport.file_transport.ChatActivity;
+import com.lanan.encrypted_file_transport.main.MainActivity;
 import com.lanan.encrypted_file_transport.R;
-import com.lanan.encrypted_file_transport.services.uploadLogService;
-import com.lanan.encrypted_file_transport.utils.encryption;
-import com.lanan.encrypted_file_transport.utils.getThumbnail;
-import com.lanan.encrypted_file_transport.utils.parameters;
-import com.lanan.encrypted_file_transport.utils.streamTool;
+import com.lanan.encrypted_file_transport.services.UploadLogService;
+import com.lanan.encrypted_file_transport.utils.Encryption;
+import com.lanan.encrypted_file_transport.utils.GetThumbnail;
+import com.lanan.encrypted_file_transport.utils.Parameters;
+import com.lanan.encrypted_file_transport.utils.SstreamTool;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,7 +47,7 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
-public class fileManager extends AppCompatActivity {
+public class FileManager extends AppCompatActivity {
 
     private ListView listView;
     private GridView gridView;
@@ -58,7 +58,7 @@ public class fileManager extends AppCompatActivity {
     private static String serverip = null;
 
     public static Boolean image = false;
-    private static fileManagerAdapter adapter = null;
+    private static FileManagerAdapter adapter = null;
 
     public static int num;
     private static Boolean decode = false;
@@ -66,9 +66,9 @@ public class fileManager extends AppCompatActivity {
 
     private static SSLContext ctx;
 
-    private SimpleDateFormat timeFormat = parameters.newFormat;
+    private SimpleDateFormat timeFormat = Parameters.newFormat;
 
-    private uploadLogService logService;
+    private UploadLogService logService;
 
     ProgressDialog pDialog;
     TextView mPath;
@@ -107,10 +107,10 @@ public class fileManager extends AppCompatActivity {
                 break;
         }
 
-        logService = new uploadLogService(this);
+        logService = new UploadLogService(this);
 
         mdatalist.clear();
-        mdatalist = getFileDir(chatActivity.dir[num]);
+        mdatalist = getFileDir(ChatActivity.dir[num]);
 
         initViews();
     }
@@ -161,7 +161,7 @@ public class fileManager extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fileManager.this.finish();
+                FileManager.this.finish();
             }
         });
 
@@ -175,14 +175,14 @@ public class fileManager extends AppCompatActivity {
                         if (file.exists()){
                             uploadFile(file);
                         } else {
-                            Toast.makeText(fileManager.this, "所选文件不存在", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FileManager.this, "所选文件不存在", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
                 Intent goIntent = new Intent();
-                goIntent.setClass(fileManager.this, chatActivity.class);
+                goIntent.setClass(FileManager.this, ChatActivity.class);
                 startActivity(goIntent);
-                fileManager.this.finish();
+                FileManager.this.finish();
             }
         });
 
@@ -210,7 +210,7 @@ public class fileManager extends AppCompatActivity {
 
         mdatalist = getFileDir(rootPath);
 
-        adapter = new fileManagerAdapter(this, mdatalist);
+        adapter = new FileManagerAdapter(this, mdatalist);
 
         if (image){
             gridView.setAdapter(adapter);
@@ -218,7 +218,7 @@ public class fileManager extends AppCompatActivity {
             listView.setAdapter(adapter);
         }
 
-        parameters.setStatusBarColor(this, mainActivity.isAbove);
+        Parameters.setStatusBarColor(this, MainActivity.isAbove);
         sslInit();
     }
 
@@ -229,18 +229,18 @@ public class fileManager extends AppCompatActivity {
             KeyStore trustedKeyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             try {
                 clientKeyStore.load(getBaseContext().getResources().getAssets().open("Client.bks"),
-                        parameters.KEY_STORE_PWD.toCharArray());
+                        Parameters.KEY_STORE_PWD.toCharArray());
                 trustedKeyStore.load(getBaseContext().getResources().getAssets().open("trustedClient.bks"),
-                        parameters.KEY_STORE_PWD.toCharArray());
+                        Parameters.KEY_STORE_PWD.toCharArray());
             }catch (Exception e){
                 e.printStackTrace();
             }
 
             //初始化密钥管理器和信任管理器
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(parameters.KEY_MANAGER);
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(parameters.KEY_MANAGER);
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(Parameters.KEY_MANAGER);
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(Parameters.KEY_MANAGER);
             try {
-                keyManagerFactory.init(clientKeyStore, parameters.KEY_STORE_PWD.toCharArray());
+                keyManagerFactory.init(clientKeyStore, Parameters.KEY_STORE_PWD.toCharArray());
                 trustManagerFactory.init(trustedKeyStore);
                 Log.d("Emilio", "信任密钥管理器加载完毕");
             }catch (Exception e){
@@ -292,7 +292,7 @@ public class fileManager extends AppCompatActivity {
                     PushbackInputStream inStream = new PushbackInputStream(socket.getInputStream());
                     Log.d("Emilio", "socket成功");
 
-                    String response = streamTool.readLine(inStream);
+                    String response = SstreamTool.readLine(inStream);
                     String[] items = response.split(";");
                     String responseId = items[0].substring(items[0].indexOf("=")+1);
                     String position = items[1].substring(items[1].indexOf("=")+1);
@@ -320,7 +320,7 @@ public class fileManager extends AppCompatActivity {
                         int cryptLen;
 
                         CipherInputStream cipherInputStream = new CipherInputStream(
-                                inputStream, encryption.cipherSet(Cipher.ENCRYPT_MODE));
+                                inputStream, Encryption.cipherSet(Cipher.ENCRYPT_MODE));
                         while ((cryptLen = cipherInputStream.read(encryptBuffer)) != -1) {
                             outStream.write(encryptBuffer, 0, cryptLen);
                         }
@@ -337,8 +337,8 @@ public class fileManager extends AppCompatActivity {
                     bundle.putString("sendfilename", uploadFile.getAbsolutePath());
 
                     intent.putExtras(bundle);
-                    intent.setAction(chatActivity.SENDMSG);
-                    chatActivity.local.sendBroadcast(intent);
+                    intent.setAction(ChatActivity.SENDMSG);
+                    ChatActivity.local.sendBroadcast(intent);
 
                     inputStream.close();
                     inStream.close();
@@ -366,7 +366,7 @@ public class fileManager extends AppCompatActivity {
                         map.put("path", file.getAbsolutePath());
                         map.put("flag", false);
                         if (num == 2) {
-                            map.put("thumbnail", getThumbnail.decodeFile(file));
+                            map.put("thumbnail", GetThumbnail.decodeFile(file));
                         }
                         newList.add(map);
                     }

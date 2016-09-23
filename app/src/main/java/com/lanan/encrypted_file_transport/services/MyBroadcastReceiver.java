@@ -4,14 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.lanan.encrypted_file_transport.main.mainActivity;
-import com.lanan.encrypted_file_transport.utils.appAlive;
+import com.lanan.encrypted_file_transport.main.MainActivity;
+import com.lanan.encrypted_file_transport.utils.AppAlive;
 
-public class myBroadcastReceiver extends BroadcastReceiver {
+public class MyBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(appAlive.isAppAlive(context, "com.lanan.fileEncryptedTransport")){
-            Intent mainIntent = new Intent(context, mainActivity.class);
+        if(AppAlive.isAppAlive(context, "com.lanan.fileEncryptedTransport")){
+            Intent mainIntent = new Intent(context, MainActivity.class);
             context.startActivity(mainIntent);
         }else {
             Intent launchIntent = context.getPackageManager().

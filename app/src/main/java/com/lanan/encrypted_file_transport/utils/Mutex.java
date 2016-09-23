@@ -1,9 +1,9 @@
 package com.lanan.encrypted_file_transport.utils;
 
-public class mutex {
+public class Mutex {
     private boolean syncLock;
 
-    public mutex() {
+    public Mutex() {
         syncLock = false;
     }
 

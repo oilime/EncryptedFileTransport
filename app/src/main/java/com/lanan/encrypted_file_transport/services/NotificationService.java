@@ -12,9 +12,9 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.lanan.encrypted_file_transport.main.mainActivity;
+import com.lanan.encrypted_file_transport.main.MainActivity;
 import com.lanan.encrypted_file_transport.R;
-import com.lanan.encrypted_file_transport.utils.parameters;
+import com.lanan.encrypted_file_transport.utils.Parameters;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,16 +39,16 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.TrustManagerFactory;
 
-public class notificationService extends Service {
+public class NotificationService extends Service {
 
 	private static int messageNotificationID = 1000;
 
-    private static final String mainPath = parameters.mainPath;
+    private static final String mainPath = Parameters.mainPath;
 	private static Notification messageNotification = null;
 	private static NotificationManager messageNotificationManager = null;
 
 	private RemoteViews customView;
-	private SimpleDateFormat newFormat = parameters.newFormat;
+	private SimpleDateFormat newFormat = Parameters.newFormat;
 
     private static SSLServerSocket serverSocket;
     private static boolean recvFlag = true;
@@ -67,7 +67,7 @@ public class notificationService extends Service {
 
 		customView = new RemoteViews(getPackageName(), R.layout.customerview);
 
-        Intent messageIntent = new Intent(this, mainActivity.class);
+        Intent messageIntent = new Intent(this, MainActivity.class);
         PendingIntent messagePendingIntent = PendingIntent.getActivity(this, messageNotificationID - 1,
 				messageIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(getBaseContext())
@@ -87,7 +87,7 @@ public class notificationService extends Service {
 		executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 50);
 
         init();
-        Thread thread = new Thread(new Runnable() {
+        Thread recv_thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while (true){
@@ -104,7 +104,7 @@ public class notificationService extends Service {
 				}
 			}
 		});
-		thread.start();
+		recv_thread.start();
 
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -116,18 +116,18 @@ public class notificationService extends Service {
             KeyStore trustedKeyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             try {
                 serverKeyStore.load(getBaseContext().getResources().getAssets().open("Server.bks"),
-                        parameters.KEY_STORE_PWD.toCharArray());
+                        Parameters.KEY_STORE_PWD.toCharArray());
                 trustedKeyStore.load(getBaseContext().getResources().getAssets().open("trustedServer.bks"),
-                        parameters.KEY_STORE_PWD.toCharArray());
+                        Parameters.KEY_STORE_PWD.toCharArray());
             }catch (Exception e){
                 Log.d("Emilio", e.toString());
             }
 
             //初始化密钥管理器和信任管理器
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(parameters.KEY_MANAGER);
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(parameters.KEY_MANAGER);
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(Parameters.KEY_MANAGER);
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(Parameters.KEY_MANAGER);
             try {
-                keyManagerFactory.init(serverKeyStore, parameters.KEY_STORE_PWD.toCharArray());
+                keyManagerFactory.init(serverKeyStore, Parameters.KEY_STORE_PWD.toCharArray());
                 trustManagerFactory.init(trustedKeyStore);
             }catch (Exception e){
                 e.printStackTrace();
@@ -187,11 +187,11 @@ public class notificationService extends Service {
 					String sourceId = items[3].substring(items[3].indexOf("=") + 1);
 					String recvName = "";
 
-					for(int i = 0; i < mainActivity.dataList.size(); i++){
-						for (int j = 0; j < mainActivity.dataList.get(i).size(); j++){
-							String testIp = (String) mainActivity.dataList.get(i).get(j).get("ip");
+					for(int i = 0; i < MainActivity.dataList.size(); i++){
+						for (int j = 0; j < MainActivity.dataList.get(i).size(); j++){
+							String testIp = (String) MainActivity.dataList.get(i).get(j).get("ip");
 							if(testIp.equals(hostip)){
-								recvName = (String) mainActivity.dataList.get(i).get(j).get("name");
+								recvName = (String) MainActivity.dataList.get(i).get(j).get("name");
 								break;
 							}
 						}
@@ -272,16 +272,16 @@ public class notificationService extends Service {
                             bundle.putString("hostip", hostip);
 
 							intent.putExtras(bundle);
-							intent.setAction(mainActivity.RECVMSG);
-							mainActivity.local.sendBroadcast(intent);
+							intent.setAction(MainActivity.RECVMSG);
+							MainActivity.local.sendBroadcast(intent);
 
                             customView.setTextViewText(R.id.when, newFormat.format(curDate));
                             recvName = "未知用户";
-                            for(int i = 0; i < mainActivity.dataList.size(); i++){
-                                for (int j = 0; j < mainActivity.dataList.get(i).size(); j++){
-                                    String testIp = (String) mainActivity.dataList.get(i).get(j).get("ip");
+                            for(int i = 0; i < MainActivity.dataList.size(); i++){
+                                for (int j = 0; j < MainActivity.dataList.get(i).size(); j++){
+                                    String testIp = (String) MainActivity.dataList.get(i).get(j).get("ip");
                                     if(testIp.equals(hostip)){
-                                        recvName = (String) mainActivity.dataList.get(i).get(j).get("name");
+                                        recvName = (String) MainActivity.dataList.get(i).get(j).get("name");
                                         break;
                                     }
                                 }

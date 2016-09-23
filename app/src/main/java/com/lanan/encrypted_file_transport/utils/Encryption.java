@@ -11,7 +11,7 @@ import javax.crypto.CipherOutputStream;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class encryption {
+public class Encryption {
 	
 	static final String algorithmStr = "AES/CBC/PKCS5Padding";
     static private Cipher cipher;

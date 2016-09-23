@@ -1,6 +1,6 @@
 package com.lanan.encrypted_file_transport.file_transport;
 
-public class chatMsgEntity {
+public class ChatMsgEntity {
 	private String name;
 	private String date;
 	private String message;

@@ -10,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanan.encrypted_file_transport.R;
-import com.lanan.encrypted_file_transport.utils.getThumbnail;
+import com.lanan.encrypted_file_transport.utils.GetThumbnail;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-public class fileManagerAdapter extends BaseAdapter {
+public class FileManagerAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<Map<String, Object>> mlist;
     private Boolean image;
@@ -25,11 +25,11 @@ public class fileManagerAdapter extends BaseAdapter {
     private int[] resId = new int[]{R.drawable.music,R.drawable.video,
                                     R.drawable.image, R.drawable.doc};
 
-    public fileManagerAdapter(Context context, List<Map<String, Object>> dataList) {
+    public FileManagerAdapter(Context context, List<Map<String, Object>> dataList) {
         mInflater = LayoutInflater.from(context);
         this.mlist = dataList;
-        this.image = fileManager.image;
-        this.which = fileManager.num;
+        this.image = FileManager.image;
+        this.which = FileManager.num;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class fileManagerAdapter extends BaseAdapter {
             holder.check.setVisibility(View.VISIBLE);
         } else {
             if (!mlist.get(position).containsKey("thumbnail")){
-                Bitmap bitmap = getThumbnail.decodeFile(f);
+                Bitmap bitmap = GetThumbnail.decodeFile(f);
                 mlist.get(position).put("thumbnail", bitmap);
                 holder.thumbnail.setImageBitmap(bitmap);
             } else {

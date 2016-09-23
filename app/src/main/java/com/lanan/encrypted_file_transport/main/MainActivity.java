@@ -18,11 +18,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ExpandableListView;
 
-import com.lanan.encrypted_file_transport.file_transport.chatActivity;
+import com.lanan.encrypted_file_transport.file_transport.ChatActivity;
 import com.lanan.encrypted_file_transport.R;
-import com.lanan.encrypted_file_transport.services.notificationService;
-import com.lanan.encrypted_file_transport.utils.mutex;
-import com.lanan.encrypted_file_transport.utils.parameters;
+import com.lanan.encrypted_file_transport.services.NotificationService;
+import com.lanan.encrypted_file_transport.utils.Mutex;
+import com.lanan.encrypted_file_transport.utils.Parameters;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,20 +34,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class mainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     public static List<List<Map<String, Object>>> dataList;
     public static boolean isAbove = Build.VERSION.SDK_INT >= 21;
 
-    public static mutex mutex = new mutex();
+    public static Mutex mutex = new Mutex();
 
     public static LocalBroadcastManager local;
     public static BroadcastReceiver mReceiver;
-    public static final String RECVMSG = parameters.MAIN_RECVMSG;
+    public static final String RECVMSG = Parameters.MAIN_RECVMSG;
 
     private static String goname = "";
     private static final int WRITE_STORAGE = 1;
-    private static final String mainPath = parameters.mainPath;
+    private static final String mainPath = Parameters.mainPath;
 
     private Intent serviceIntent;
 
@@ -59,7 +59,7 @@ public class mainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.expandlist);
 
-        serviceIntent = new Intent().setClass(mainActivity.this, notificationService.class);
+        serviceIntent = new Intent().setClass(MainActivity.this, NotificationService.class);
         startService(serviceIntent);
 
         PermissionCheck();          //权限检查
@@ -93,11 +93,11 @@ public class mainActivity extends AppCompatActivity {
                         String recvIp = bundle.getString("hostip");
                         String recvname = "unknown_user";
 
-                        for(int i = 0; i < mainActivity.dataList.size(); i++){
-                            for (int j = 0; j < mainActivity.dataList.get(i).size(); j++){
-                                String testIp = (String) mainActivity.dataList.get(i).get(j).get("ip");
+                        for(int i = 0; i < MainActivity.dataList.size(); i++){
+                            for (int j = 0; j < MainActivity.dataList.get(i).size(); j++){
+                                String testIp = (String) MainActivity.dataList.get(i).get(j).get("ip");
                                 if(testIp.equals(recvIp)){
-                                    recvname = (String) mainActivity.dataList.get(i).get(j).get("name");
+                                    recvname = (String) MainActivity.dataList.get(i).get(j).get("name");
                                     break;
                                 }
                             }
@@ -120,9 +120,9 @@ public class mainActivity extends AppCompatActivity {
                             dataBundle.putString("recvname", recvname);
                             dataBundle.putString("recvfilename", recvFilename);
                             noticeIntent.putExtras(dataBundle);
-                            noticeIntent.setAction(chatActivity.RECVMSG);
-                            chatActivity.local.sendBroadcast(noticeIntent);
-                            mainActivity.mutex.lock();
+                            noticeIntent.setAction(ChatActivity.RECVMSG);
+                            ChatActivity.local.sendBroadcast(noticeIntent);
+                            MainActivity.mutex.lock();
                         }
 
                         RandomAccessFile recvWrite = new RandomAccessFile(recvFile, "rw");
@@ -134,7 +134,7 @@ public class mainActivity extends AppCompatActivity {
                         recvWrite.close();
 
                         if(recvname.equals(goname))
-                            mainActivity.mutex.unlock();
+                            MainActivity.mutex.unlock();
 
                     }catch (Exception e){
                         e.printStackTrace();
@@ -146,7 +146,7 @@ public class mainActivity extends AppCompatActivity {
     }
 
     private void InitView(){
-        mainAdapter mainAdapter = new mainAdapter(mainActivity.this, dataList);
+        MainAdapter mainAdapter = new MainAdapter(MainActivity.this, dataList);
 
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandlist);
         expandableListView.setGroupIndicator(null);
@@ -155,7 +155,7 @@ public class mainActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent = new Intent();
-                intent.setClass(mainActivity.this, chatActivity.class);
+                intent.setClass(MainActivity.this, ChatActivity.class);
                 goname = (String)dataList.get(groupPosition).get(childPosition).get("name");
                 intent.putExtra("tarname", goname);
                 intent.putExtra("ip", (String)dataList.get(groupPosition).get(childPosition).get("ip"));
@@ -164,7 +164,7 @@ public class mainActivity extends AppCompatActivity {
             }
         });
 
-        parameters.setStatusBarColor(this, isAbove);
+        Parameters.setStatusBarColor(this, isAbove);
     }
 
     private void getTarData(){
@@ -224,7 +224,7 @@ public class mainActivity extends AppCompatActivity {
     }
 
     private void PermissionCheck(){
-        if (ContextCompat.checkSelfPermission(mainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             Log.d("Emilio","不能写");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},

@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class parameters {
+public class Parameters {
 
     public static final String mainPath = Environment.getExternalStorageDirectory().getPath()
             + "/alan/system/security/local/tmp/chs";
@@ -63,7 +63,7 @@ public class parameters {
             ViewGroup mContentView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
 
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            int statusBarHeight = parameters.getStatusBarHeight(activity);
+            int statusBarHeight = Parameters.getStatusBarHeight(activity);
 
             View mChildView = mContentView.getChildAt(0);
             if (mChildView != null) {

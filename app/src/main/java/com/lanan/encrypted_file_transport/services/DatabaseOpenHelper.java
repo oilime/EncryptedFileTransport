@@ -4,9 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class databaseOpenHelper extends SQLiteOpenHelper {
+public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
-	public databaseOpenHelper(Context context) {
+	public DatabaseOpenHelper(Context context) {
 		super(context, "upload.db", null, 1);
 	}
 

@@ -12,7 +12,7 @@ import com.lanan.encrypted_file_transport.R;
 
 import java.util.List;
 
-public class chatMsgViewAdapter extends BaseAdapter {
+public class ChatMsgViewAdapter extends BaseAdapter {
 
 	public interface IMsgViewType {
 		int COM_MSG = 0;						// 收到对方的消息
@@ -20,10 +20,10 @@ public class chatMsgViewAdapter extends BaseAdapter {
 	}
 
 	private static final int ITEM_COUNT = 2;	// 消息类型的总数
-	private List<chatMsgEntity> coll;			// 消息对象数组
+	private List<ChatMsgEntity> coll;			// 消息对象数组
 	private LayoutInflater mInflater;
 
-	public chatMsgViewAdapter(Context context, List<chatMsgEntity> coll) {
+	public ChatMsgViewAdapter(Context context, List<ChatMsgEntity> coll) {
 		this.coll = coll;
 		mInflater = LayoutInflater.from(context);
 	}
@@ -41,7 +41,7 @@ public class chatMsgViewAdapter extends BaseAdapter {
 	}
 
 	public int getItemViewType(int position) {
-		chatMsgEntity entity = coll.get(position);
+		ChatMsgEntity entity = coll.get(position);
 
 		if (entity.getMsgType()) {				//收到的消息
 			return IMsgViewType.COM_MSG;
@@ -56,7 +56,7 @@ public class chatMsgViewAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		chatMsgEntity entity = coll.get(position);
+		ChatMsgEntity entity = coll.get(position);
 		final boolean isComMsg = entity.getMsgType();
 
 		ViewHolder viewHolder;
@@ -90,11 +90,11 @@ public class chatMsgViewAdapter extends BaseAdapter {
 				Intent intent = new Intent();
 				intent.putExtra("filename", filepath);
 				if (isComMsg) {
-					intent.setAction(chatActivity.DECRYPTFILE);
+					intent.setAction(ChatActivity.DECRYPTFILE);
 				}else {
-					intent.setAction(chatActivity.FILE);
+					intent.setAction(ChatActivity.FILE);
 				}
-				chatActivity.local.sendBroadcast(intent);
+				ChatActivity.local.sendBroadcast(intent);
 			}
 		});
 

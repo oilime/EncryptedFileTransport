@@ -6,7 +6,7 @@ import android.util.Log;
 
 import java.util.List;
 
-public class appAlive {
+public class AppAlive {
     public static boolean isAppAlive(Context context, String packageName){
         ActivityManager activityManager =
                 (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);

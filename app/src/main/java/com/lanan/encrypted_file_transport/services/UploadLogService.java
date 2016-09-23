@@ -6,11 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.io.File;
 
-public class uploadLogService {
-	private databaseOpenHelper databaseOpenHelper;
+public class UploadLogService {
+	private DatabaseOpenHelper databaseOpenHelper;
 	
-	public uploadLogService(Context context){
-		this.databaseOpenHelper = new databaseOpenHelper(context);
+	public UploadLogService(Context context){
+		this.databaseOpenHelper = new DatabaseOpenHelper(context);
 	}
 	
 	public void save(String sourceid, File uploadFile){

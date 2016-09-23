@@ -13,14 +13,14 @@ import com.lanan.encrypted_file_transport.R;
 import java.util.List;
 import java.util.Map;
 
-public class mainAdapter extends BaseExpandableListAdapter {
+public class MainAdapter extends BaseExpandableListAdapter {
 
     private List<List<Map<String, Object>>> mlist;
     private LayoutInflater mInflater;
 
     private String[] group_title_array = new String[] {"一院","二院","三院","四院"};
 
-    public mainAdapter(Context context, List<List<Map<String, Object>>> mylist){
+    public MainAdapter(Context context, List<List<Map<String, Object>>> mylist){
         this.mlist = mylist;
         this.mInflater = LayoutInflater.from(context);
     }

@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import java.io.File;
 import java.io.FileInputStream;
 
-public class getThumbnail {
+public class GetThumbnail {
 
     public static Bitmap decodeFile(File f){
         try {

@@ -3,7 +3,7 @@ package com.lanan.encrypted_file_transport.utils;
 import java.io.IOException;
 import java.io.PushbackInputStream;
 
-public class streamTool {
+public class SstreamTool {
 	 
 	 public static String readLine(PushbackInputStream in) throws IOException {
 			char buf[] = new char[128];
