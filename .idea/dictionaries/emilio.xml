@@ -1,41 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="emilio">
     <words>
-      <w>abcdefghijklmnopqrstuvwxyz</w>
-      <w>allchar</w>
-      <w>datas</w>
-      <w>decryptfile</w>
-      <w>filetransport</w>
-      <w>goname</w>
-      <w>historyinfo</w>
-      <w>hostip</w>
-      <w>infos</w>
-      <w>lanan</w>
-      <w>mdatalist</w>
-      <w>mlist</w>
-      <w>mylist</w>
-      <w>objname</w>
-      <w>objpath</w>
-      <w>openfile</w>
-      <w>pkcs</w>
-      <w>recv</w>
-      <w>recvdate</w>
-      <w>recvfilename</w>
-      <w>recvmsg</w>
-      <w>recvname</w>
-      <w>sdoc</w>
-      <w>senddate</w>
-      <w>sendfilename</w>
-      <w>sendmsg</w>
-      <w>sendw</w>
-      <w>serverip</w>
-      <w>simage</w>
-      <w>smusic</w>
-      <w>sourceid</w>
-      <w>svideo</w>
-      <w>tarname</w>
-      <w>uploadfilepath</w>
-      <w>uploadlog</w>
+      <w>addr</w>
     </words>
   </dictionary>
 </component>

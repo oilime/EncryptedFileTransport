@@ -14,7 +14,7 @@
         android:label="@string/app_name">
 
         <activity
-            android:name=".Main.mainActivity"
+            android:name=".main.mainActivity"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,22 +24,22 @@
         </activity>
 
         <activity
-            android:name=".FileTransport.chatActivity"
+            android:name=".file_transport.chatActivity"
             android:launchMode="singleInstance">
         </activity>
 
         <activity
-            android:name=".FileActions.fileManager"
+            android:name=".file_manage.fileManager"
             android:launchMode="singleInstance">
         </activity>
 
-        <service android:name=".Services.notificationService">
+        <service android:name=".services.notificationService">
             <intent-filter>
                 <action android:name="NotificationService" />
             </intent-filter>
         </service>
 
-        <receiver android:name=".Services.myBroadcastReceiver">
+        <receiver android:name=".services.myBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <category android:name="android.intent.category.HOME" />

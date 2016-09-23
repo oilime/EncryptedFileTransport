@@ -1,0 +1,8 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('AndroidCRT.jar')
+    compile files('bc422.jar')
+    compile files('AndroidSM.jar')
+}
