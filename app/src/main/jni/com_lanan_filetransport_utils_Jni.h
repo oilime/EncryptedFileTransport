@@ -14,7 +14,7 @@ extern "C" {
  * Signature: (ILjava/lang/String;Ljava/lang/String;)I
  */
 JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_server_1set_1socket
-  (JNIEnv *, jobject, jint, jstring, jstring);
+        (JNIEnv *, jobject, jint, jstring, jstring);
 
 /*
  * Class:     com_lanan_filetransport_utils_Jni
@@ -30,7 +30,7 @@ JNIEXPORT void JNICALL Java_com_lanan_filetransport_utils_Jni_set_1stop
  * Signature: (Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
  */
 JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_client_1send_1file
-  (JNIEnv *, jobject, jstring, jint, jstring, jstring, jstring);
+        (JNIEnv *, jobject, jstring, jint, jstring, jstring, jstring);
 
 #define TAG "Emilio"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)

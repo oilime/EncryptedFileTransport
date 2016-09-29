@@ -20,11 +20,11 @@ public class Jni {
 
     private ArrayList<Map<String, Object>> dataList;
 
-    public Jni () {
+    public Jni() {
         super();
     }
 
-    public Jni (ArrayList<Map<String, Object>> dataList) {
+    public Jni(ArrayList<Map<String, Object>> dataList) {
         this.dataList = dataList;
     }
 
@@ -46,18 +46,18 @@ public class Jni {
         String recvName = "";
         String appHome;
 
-        for(int i = 0; i < MainActivity.dataList.size(); i++){
-            for (int j = 0; j < MainActivity.dataList.get(i).size(); j++){
+        for (int i = 0; i < MainActivity.dataList.size(); i++) {
+            for (int j = 0; j < MainActivity.dataList.get(i).size(); j++) {
                 String testIp = (String) MainActivity.dataList.get(i).get(j).get("ip");
-                if(testIp.equals(ip)){
+                if (testIp.equals(ip)) {
                     recvName = (String) MainActivity.dataList.get(i).get(j).get("name");
                     break;
                 }
             }
         }
-        if (filename.endsWith(".pro")){
+        if (filename.endsWith(".pro")) {
             appHome = mainPath + "/.config/";
-        } else if(!recvName.isEmpty()){
+        } else if (!recvName.isEmpty()) {
             appHome = mainPath + "/FileTransport/" + recvName;
         } else {
             appHome = mainPath + "/FileTransport/unknown_user";
@@ -65,14 +65,14 @@ public class Jni {
 
         File dir = new File(appHome);
         File file = new File(dir, filename);
-        if(file.exists() && !filename.endsWith(".pro")){
+        if (file.exists() && !filename.endsWith(".pro")) {
             filename = filename.substring(0, filename.indexOf("."))
-                    + dir.listFiles().length+ filename.substring(filename.indexOf("."));
+                    + dir.listFiles().length + filename.substring(filename.indexOf("."));
             file = new File(dir, filename);
         }
 
         Date curDate = new Date(System.currentTimeMillis());
-        String recvdate	= newFormat.format(curDate);
+        String recvdate = newFormat.format(curDate);
         map.put("recvdate", recvdate);
         map.put("hostip", ip);
 
@@ -93,6 +93,8 @@ public class Jni {
     }
 
     public native int server_set_socket(int port, String certPath, String caPath);
+
     public native void set_stop();
+
     public native int client_send_file(String serverip, int port, String caPath, String filepath, String hostip);
 }

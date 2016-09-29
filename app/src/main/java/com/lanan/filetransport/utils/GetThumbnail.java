@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 
 public class GetThumbnail {
 
-    public static Bitmap decodeFile(File f){
+    public static Bitmap decodeFile(File f) {
         try {
             BitmapFactory.Options bfOptions = new BitmapFactory.Options();
             bfOptions.inTempStorage = new byte[32 * 1024];
@@ -20,7 +20,7 @@ public class GetThumbnail {
 
             final int REQUIRED_SIZE = 320;
             int scale = 1;
-            while (bfOptions.outWidth/scale >= REQUIRED_SIZE && bfOptions.outHeight/scale >= REQUIRED_SIZE)
+            while (bfOptions.outWidth / scale >= REQUIRED_SIZE && bfOptions.outHeight / scale >= REQUIRED_SIZE)
                 scale *= 2;
 
             BitmapFactory.Options bfOptions2 = new BitmapFactory.Options();

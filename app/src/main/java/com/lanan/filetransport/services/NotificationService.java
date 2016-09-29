@@ -23,53 +23,53 @@ import java.util.Map;
 
 public class NotificationService extends Service {
 
-	private static int messageNotificationID = 1000;
+    private static int messageNotificationID = 1000;
 
-	private static Notification messageNotification = null;
-	private static NotificationManager messageNotificationManager = null;
+    private static Notification messageNotification = null;
+    private static NotificationManager messageNotificationManager = null;
 
-	private RemoteViews customView;
+    private RemoteViews customView;
     private ArrayList<Map<String, Object>> dataList = new ArrayList<>();
 
     private Jni server;
     private handleThread handle;
     private int ret;
 
-	public IBinder onBind(Intent intent) {
-		return null;
-	}
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
-	@Override
-	public int onStartCommand(Intent intent, final int flags, final int startId) {
+    @Override
+    public int onStartCommand(Intent intent, final int flags, final int startId) {
 
-		customView = new RemoteViews(getPackageName(), R.layout.customerview);
+        customView = new RemoteViews(getPackageName(), R.layout.customerview);
 
         Intent messageIntent = new Intent(this, MainActivity.class);
         PendingIntent messagePendingIntent = PendingIntent.getActivity(this, messageNotificationID - 1,
-				messageIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                messageIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(getBaseContext())
-				.setSmallIcon(R.drawable.sendbutton)
-				.setTicker("您收到新的文件")
-				.setDefaults(Notification.DEFAULT_SOUND)
-				.setDefaults(Notification.DEFAULT_VIBRATE)
-				.setContentIntent(messagePendingIntent)
-				.setSound(RingtoneManager.getActualDefaultRingtoneUri(getBaseContext(),
-						RingtoneManager.TYPE_NOTIFICATION))
-				.setAutoCancel(true);
+                .setSmallIcon(R.drawable.sendbutton)
+                .setTicker("您收到新的文件")
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setContentIntent(messagePendingIntent)
+                .setSound(RingtoneManager.getActualDefaultRingtoneUri(getBaseContext(),
+                        RingtoneManager.TYPE_NOTIFICATION))
+                .setAutoCancel(true);
         if (Build.VERSION.SDK_INT >= 24) {
             builder.setCustomContentView(customView);
         } else {
             builder.setContent(customView);
         }
 
-		messageNotification = builder.build();
-		messageNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        messageNotification = builder.build();
+        messageNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         server = new Jni(dataList);
 
         Thread recv_thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
+            @Override
+            public void run() {
                 ret = server.server_set_socket(1223,
                         Environment.getExternalStorageDirectory().getAbsolutePath() + "/rsacert/server.pem",
                         Environment.getExternalStorageDirectory().getAbsolutePath() + "/rsacert/rootca.pem");
@@ -108,30 +108,30 @@ public class NotificationService extends Service {
                         break;
                 }
 
-			}
-		});
-		recv_thread.start();
+            }
+        });
+        recv_thread.start();
 
         handle = new handleThread(server);
         handle.start();
 
-		return super.onStartCommand(intent, flags, startId);
-	}
+        return super.onStartCommand(intent, flags, startId);
+    }
 
     private class handleThread extends Thread {
         private boolean isStop = false;
         private Jni server;
 
-        handleThread (Jni server) {
+        handleThread(Jni server) {
             this.server = server;
         }
 
-        void setStop (boolean flag) {
+        void setStop(boolean flag) {
             this.isStop = flag;
         }
 
         @Override
-        public void run () {
+        public void run() {
             int i = 0;
             while (!isStop) {
                 try {
@@ -156,16 +156,16 @@ public class NotificationService extends Service {
 
                         customView.setTextViewText(R.id.when, recvdate);
                         String recvName = "未知用户";
-                        for(int n = 0; n < MainActivity.dataList.size(); n++){
-                            for (int j = 0; j < MainActivity.dataList.get(n).size(); j++){
+                        for (int n = 0; n < MainActivity.dataList.size(); n++) {
+                            for (int j = 0; j < MainActivity.dataList.get(n).size(); j++) {
                                 String testIp = (String) MainActivity.dataList.get(n).get(j).get("ip");
-                                if(testIp.equals(hostip)){
+                                if (testIp.equals(hostip)) {
                                     recvName = (String) MainActivity.dataList.get(n).get(j).get("name");
                                     break;
                                 }
                             }
                         }
-                        customView.setTextViewText(R.id.contentText, "您收到了来自"+recvName+"的新文件");
+                        customView.setTextViewText(R.id.contentText, "您收到了来自" + recvName + "的新文件");
                         messageNotificationManager.notify(messageNotificationID,
                                 messageNotification);
                         messageNotificationID++;

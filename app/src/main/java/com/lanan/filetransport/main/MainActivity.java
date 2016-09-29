@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -37,7 +36,6 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     public static List<List<Map<String, Object>>> dataList;
-    public static boolean isAbove = Build.VERSION.SDK_INT >= 21;
 
     public static Mutex mutex = new Mutex();
 
@@ -53,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
     boolean retFlag;
 
-    @Override  
-    public void onCreate(Bundle savedInstanceState) {  
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.expandlist);
@@ -69,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent){
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
     }
 
-    private void localBroadcastRegister(){
+    private void localBroadcastRegister() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(RECVMSG);
         Log.d("Emilio", "Main filter注册成功");
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(RECVMSG)){
+                if (intent.getAction().equals(RECVMSG)) {
                     try {
                         Log.d("Emilio", "接收到MAIN_RECVMSG广播");
                         Bundle bundle = intent.getExtras();
@@ -93,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
                         String recvIp = bundle.getString("hostip");
                         String recvname = "unknown_user";
 
-                        for(int i = 0; i < MainActivity.dataList.size(); i++){
-                            for (int j = 0; j < MainActivity.dataList.get(i).size(); j++){
+                        for (int i = 0; i < MainActivity.dataList.size(); i++) {
+                            for (int j = 0; j < MainActivity.dataList.get(i).size(); j++) {
                                 String testIp = (String) MainActivity.dataList.get(i).get(j).get("ip");
-                                if(testIp.equals(recvIp)){
+                                if (testIp.equals(recvIp)) {
                                     recvname = (String) MainActivity.dataList.get(i).get(j).get("name");
                                     break;
                                 }
@@ -105,15 +103,15 @@ public class MainActivity extends AppCompatActivity {
 
                         String recvPath = mainPath + "/FileTransport/" + recvname;
                         File recvFile = new File(recvPath, "historyinfo.txt");
-                        if(!recvFile.exists()){
+                        if (!recvFile.exists()) {
                             try {
                                 retFlag = recvFile.createNewFile();
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
 
-                        if(recvname.equals(goname)){
+                        if (recvname.equals(goname)) {
                             Intent noticeIntent = new Intent();
                             Bundle dataBundle = new Bundle();
                             dataBundle.putString("recvdate", recvDate);
@@ -133,10 +131,10 @@ public class MainActivity extends AppCompatActivity {
                         recvWrite.write(sd.getBytes());
                         recvWrite.close();
 
-                        if(recvname.equals(goname))
+                        if (recvname.equals(goname))
                             MainActivity.mutex.unlock();
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -145,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         local.registerReceiver(mReceiver, filter);
     }
 
-    private void InitView(){
+    private void InitView() {
         MainAdapter mainAdapter = new MainAdapter(MainActivity.this, dataList);
 
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandlist);
@@ -156,9 +154,9 @@ public class MainActivity extends AppCompatActivity {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, ChatActivity.class);
-                goname = (String)dataList.get(groupPosition).get(childPosition).get("name");
+                goname = (String) dataList.get(groupPosition).get(childPosition).get("name");
                 intent.putExtra("tarname", goname);
-                intent.putExtra("ip", (String)dataList.get(groupPosition).get(childPosition).get("ip"));
+                intent.putExtra("ip", (String) dataList.get(groupPosition).get(childPosition).get("ip"));
                 startActivity(intent);
                 return true;
             }
@@ -167,16 +165,16 @@ public class MainActivity extends AppCompatActivity {
         Parameters.setStatusBarColor(this);
     }
 
-    private void getTarData(){
+    private void getTarData() {
         File path = new File(mainPath + "/.config/");
-        if(!path.isDirectory()||!path.exists())
+        if (!path.isDirectory() || !path.exists())
             retFlag = path.mkdirs();
 
         File dataFile = new File(path, "Filetransport.pro");
-        if(!dataFile.exists()){
+        if (!dataFile.exists()) {
             try {
                 retFlag = dataFile.createNewFile();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -192,13 +190,13 @@ public class MainActivity extends AppCompatActivity {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(dataFile)));
             String tarData;
-            while((tarData = in.readLine()) != null){
+            while ((tarData = in.readLine()) != null) {
                 String[] items = tarData.split(";");
                 String[] cItems = items[1].split("=");
                 Map<String, Object> childMap = new HashMap<>();
                 childMap.put("name", cItems[0]);
                 childMap.put("ip", cItems[1]);
-                switch (Integer.parseInt(items[0])){
+                switch (Integer.parseInt(items[0])) {
                     case 1:
                         list1.add(childMap);
                         break;
@@ -218,19 +216,19 @@ public class MainActivity extends AppCompatActivity {
             dataList.add(list2);
             dataList.add(list3);
             dataList.add(list4);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void PermissionCheck(){
+    private void PermissionCheck() {
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            Log.d("Emilio","不能写");
+            Log.d("Emilio", "不能写");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     WRITE_STORAGE);
-        }else
-            Log.d("Emilio","可以写");
+        } else
+            Log.d("Emilio", "可以写");
     }
 
     /* 检查当前app权限 */
@@ -249,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         local.unregisterReceiver(mReceiver);
         stopService(serviceIntent);

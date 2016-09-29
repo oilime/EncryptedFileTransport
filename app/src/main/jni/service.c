@@ -20,7 +20,7 @@ enum ERROR_SET {
 
 volatile int stop;
 
-void ShowCerts(SSL * ssl) {
+void ShowCerts(SSL *ssl) {
     X509 *cert = SSL_get_peer_certificate(ssl);
     if (cert != NULL) {
         char *line = NULL;
@@ -43,7 +43,8 @@ void ShowCerts(SSL * ssl) {
     }
 }
 
-void recv_file(JNIEnv *env, jobject obj, const char *filename, const char *filepath, const char *ip) {
+void recv_file(JNIEnv *env, jobject obj, const char *filename, const char *filepath,
+               const char *ip) {
     jclass clazz = (*env)->FindClass(env, "com/lanan/filetransport/utils/Jni");
     if (clazz == 0) {
         LOGE("find class error");
@@ -53,7 +54,7 @@ void recv_file(JNIEnv *env, jobject obj, const char *filename, const char *filep
     LOGD("Server: find class");
     jmethodID method1 = (*env)->GetMethodID(
             env, clazz, "newFileRecv", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-    if(method1 == 0){
+    if (method1 == 0) {
         LOGD("Server: find method error");
         return;
     }
@@ -174,17 +175,17 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_server_1set_1socke
             while (content != NULL) {
                 switch (flag) {
                     case 0:
-                        ip = (char *)malloc(strlen(strchr(content, sep) + 1));
+                        ip = (char *) malloc(strlen(strchr(content, sep) + 1));
                         strcpy(ip, strchr(content, sep) + 1);
                         LOGD("Server: 客户端ip地址为%s", ip);
                         break;
                     case 1:
-                        filename = (char *)malloc(strlen(strchr(content, sep) + 1));
+                        filename = (char *) malloc(strlen(strchr(content, sep) + 1));
                         strcpy(filename, strchr(content, sep) + 1);
                         LOGD("Server: 文件名为%s", filename);
                         break;
                     case 2:
-                        filelength = (char *)malloc(strlen(strchr(content, sep) + 1));
+                        filelength = (char *) malloc(strlen(strchr(content, sep) + 1));
                         strcpy(filelength, strchr(content, sep) + 1);
                         LOGD("Server: 文件长度为%s", filelength);
                     default:
@@ -219,7 +220,7 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_server_1set_1socke
             int total = 0;
             len = -1;
             while ((len = SSL_read(ssl, server_buf, MAXBUF)) > 0) {
-                write(fd, server_buf, (size_t)len);
+                write(fd, server_buf, (size_t) len);
                 LOGD("Server: read %d with %d", j++, len);
                 total += len;
                 if (total == atoi(filelength))

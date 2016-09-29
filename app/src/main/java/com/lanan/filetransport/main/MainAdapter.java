@@ -18,9 +18,9 @@ class MainAdapter extends BaseExpandableListAdapter {
     private List<List<Map<String, Object>>> mlist;
     private LayoutInflater mInflater;
 
-    private String[] group_title_array = new String[] {"一院","二院","三院","四院"};
+    private String[] group_title_array = new String[]{"一院", "二院", "三院", "四院"};
 
-    MainAdapter(Context context, List<List<Map<String, Object>>> mylist){
+    MainAdapter(Context context, List<List<Map<String, Object>>> mylist) {
         this.mlist = mylist;
         this.mInflater = LayoutInflater.from(context);
     }
@@ -67,7 +67,7 @@ class MainAdapter extends BaseExpandableListAdapter {
 
         TextView groupName = (TextView) convertView.findViewById(R.id.tarname);
         ImageView groupIcon = (ImageView) convertView.findViewById(R.id.groupicon);
-        if (isExpanded){
+        if (isExpanded) {
             groupIcon.setImageResource(R.drawable.ic_arrow_down_12dp);
         } else {
             groupIcon.setImageResource(R.drawable.ic_arrow_right_12dp);

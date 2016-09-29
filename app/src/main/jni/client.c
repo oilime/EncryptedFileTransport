@@ -55,7 +55,8 @@ void finish() {
 }
 
 JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_client_1send_1file
-        (JNIEnv *env, jobject obj, jstring j_serverip, jint j_port, jstring j_capath, jstring j_filepath, jstring j_ip) {
+        (JNIEnv *env, jobject obj, jstring j_serverip, jint j_port, jstring j_capath,
+         jstring j_filepath, jstring j_ip) {
     int len;
     char *filename, *tmp;
     const char head[8] = "hostip=";
@@ -66,7 +67,7 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_client_1send_1file
     char filelength[32] = {0};
     char ip[16] = {0};
     char filepath[256] = {0};
-    char *content = (char *)malloc(256);
+    char *content = (char *) malloc(256);
     bzero(content, 256);
 
     char serverip[128] = {0};

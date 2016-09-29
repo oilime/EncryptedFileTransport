@@ -22,8 +22,8 @@ class FileManagerAdapter extends BaseAdapter {
     private Boolean image;
     private int which;
 
-    private int[] resId = new int[]{R.drawable.music,R.drawable.video,
-                                    R.drawable.image, R.drawable.doc};
+    private int[] resId = new int[]{R.drawable.music, R.drawable.video,
+            R.drawable.image, R.drawable.doc};
 
     FileManagerAdapter(Context context, List<Map<String, Object>> dataList) {
         mInflater = LayoutInflater.from(context);
@@ -33,20 +33,17 @@ class FileManagerAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return mlist.size();
     }
 
     @Override
-    public Object getItem(int position)
-    {
+    public Object getItem(int position) {
         return mlist.get(position);
     }
 
     @Override
-    public long getItemId(int position)
-    {
+    public long getItemId(int position) {
         return position;
     }
 
@@ -54,7 +51,7 @@ class FileManagerAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
 
-        if(convertView == null) {
+        if (convertView == null) {
             if (!image) {
                 convertView = mInflater.inflate(R.layout.adapter_regular, parent, false);
                 holder = new ViewHolder();
@@ -68,20 +65,19 @@ class FileManagerAdapter extends BaseAdapter {
                 holder.check = (ImageView) convertView.findViewById(R.id.scheck);
             }
             convertView.setTag(holder);
-        }
-        else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        File f=new File((String) mlist.get(position).get("path"));
+        File f = new File((String) mlist.get(position).get("path"));
         String filename = f.getName();
 
-        if (!image){
+        if (!image) {
             holder.text.setText(filename);
-            holder.thumbnail.setImageResource(resId[which%4]);
+            holder.thumbnail.setImageResource(resId[which % 4]);
             holder.check.setVisibility(View.VISIBLE);
         } else {
-            if (!mlist.get(position).containsKey("thumbnail")){
+            if (!mlist.get(position).containsKey("thumbnail")) {
                 Bitmap bitmap = GetThumbnail.decodeFile(f);
                 mlist.get(position).put("thumbnail", bitmap);
                 holder.thumbnail.setImageBitmap(bitmap);
@@ -91,9 +87,9 @@ class FileManagerAdapter extends BaseAdapter {
         }
 
         holder.check.setImageResource(R.drawable.selected);
-        if ((Boolean) mlist.get(position).get("flag")){
+        if ((Boolean) mlist.get(position).get("flag")) {
             holder.check.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.check.setVisibility(View.GONE);
         }
 

@@ -34,7 +34,7 @@ public class Parameters {
     public static SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
 
     private static final String BAR_COLOR = "#3f51b5";  //"#2e40a4"
-    
+
     private static int getStatusBarHeight(Context context) {
         int result = 0;
         int resourceId = context.getResources().getIdentifier(
@@ -44,7 +44,7 @@ public class Parameters {
         }
         return result;
     }
-    
+
     public static void setStatusBarColor(Activity activity) {
         if (Build.VERSION.SDK_INT >= 21) {
             Window window = activity.getWindow();
@@ -56,7 +56,7 @@ public class Parameters {
             if (mChildView != null) {
                 ViewCompat.setFitsSystemWindows(mChildView, true);
             }
-        }else {
+        } else {
             Window window = activity.getWindow();
             ViewGroup mContentView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
 

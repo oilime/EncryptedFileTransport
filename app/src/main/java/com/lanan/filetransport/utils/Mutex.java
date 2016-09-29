@@ -8,11 +8,10 @@ public class Mutex {
     }
 
     public synchronized void lock() {
-        while(syncLock) {
+        while (syncLock) {
             try {
                 wait();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
