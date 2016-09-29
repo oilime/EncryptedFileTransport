@@ -2,7 +2,7 @@
 manifest
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:1:1-49:12
 	package
-		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:2:5-49
+		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:2:5-38
 		INJECTED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml
 		INJECTED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml
 	android:versionName
@@ -55,12 +55,12 @@ MERGED from [com.android.support:animated-vector-drawable:24.2.1] /home/emilio/A
 		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:12:9-43
 	android:theme
 		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:13:9-59
-activity#com.lanan.encrypted_file_transport.Main.mainActivity
+activity#com.lanan.filetransport.main.MainActivity
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:16:9-24:20
 	android:launchMode
 		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:18:13-48
 	android:name
-		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:17:13-46
+		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:17:13-69
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:19:13-23:29
 action#android.intent.action.MAIN
@@ -71,32 +71,32 @@ category#android.intent.category.LAUNCHER
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:22:17-77
 	android:name
 		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:22:27-74
-activity#com.lanan.encrypted_file_transport.FileTransport.chatActivity
+activity#com.lanan.filetransport.file_transport.ChatActivity
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:26:9-29:20
 	android:launchMode
 		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:28:13-48
 	android:name
-		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:27:13-55
-activity#com.lanan.encrypted_file_transport.FileActions.fileManager
+		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:27:13-79
+activity#com.lanan.filetransport.file_manage.FileManager
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:31:9-34:20
 	android:launchMode
 		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:33:13-48
 	android:name
-		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:32:13-52
-service#com.lanan.encrypted_file_transport.Services.notificationService
+		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:32:13-75
+service#com.lanan.filetransport.services.NotificationService
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:36:9-40:19
 	android:name
-		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:36:18-62
+		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:36:18-85
 intent-filter#NotificationService
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:37:13-39:29
 action#NotificationService
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:38:17-62
 	android:name
 		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:38:25-59
-receiver#com.lanan.encrypted_file_transport.Services.myBroadcastReceiver
+receiver#com.lanan.filetransport.services.MyBroadcastReceiver
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:42:9-47:20
 	android:name
-		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:42:19-63
+		ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:42:19-86
 intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.category.HOME
 ADDED from /home/emilio/AS_project/Encrypted_File_Transport/app/src/main/AndroidManifest.xml:43:13-46:29
 action#android.intent.action.BOOT_COMPLETED

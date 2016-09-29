@@ -2,6 +2,9 @@
   <dictionary name="emilio">
     <words>
       <w>addr</w>
+      <w>jniserver</w>
+      <w>jservice</w>
+      <w>srcset</w>
     </words>
   </dictionary>
 </component>
