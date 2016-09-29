@@ -3,10 +3,10 @@ apply plugin: "com.android.model.application"
 model {
     android {
         compileSdkVersion = 24
-        buildToolsVersion = "24.0.2"
+        buildToolsVersion = "24.0.3"
 
         defaultConfig.with {
-            applicationId = "com.lanan.encrypted_file_transport"
+            applicationId = "com.lanan.filetransport"
             minSdkVersion.apiLevel = 19
             targetSdkVersion.apiLevel = 24
             versionCode = 1

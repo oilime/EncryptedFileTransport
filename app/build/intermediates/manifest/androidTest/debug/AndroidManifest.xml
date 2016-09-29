@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lanan.encrypted_file_transport.test">
+    package="com.lanan.filetransport.test">
 
     <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="24" />
 
@@ -9,8 +9,8 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="com.lanan.encrypted_file_transport"
+                     android:targetPackage="com.lanan.filetransport"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for com.lanan.encrypted_file_transport"/>
+                     android:label="Tests for com.lanan.filetransport"/>
 </manifest>

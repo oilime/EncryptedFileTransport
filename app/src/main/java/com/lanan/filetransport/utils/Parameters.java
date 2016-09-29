@@ -3,6 +3,7 @@ package com.lanan.filetransport.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
@@ -44,8 +45,8 @@ public class Parameters {
         return result;
     }
     
-    public static void setStatusBarColor(Activity activity, boolean isAbove) {
-        if (isAbove) {
+    public static void setStatusBarColor(Activity activity) {
+        if (Build.VERSION.SDK_INT >= 21) {
             Window window = activity.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.parseColor(BAR_COLOR));

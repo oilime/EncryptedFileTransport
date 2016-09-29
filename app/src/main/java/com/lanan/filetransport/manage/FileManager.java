@@ -1,4 +1,4 @@
-package com.lanan.filetransport.file_manage;
+package com.lanan.filetransport.manage;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,8 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lanan.filetransport.R;
-import com.lanan.filetransport.file_transport.ChatActivity;
-import com.lanan.filetransport.main.MainActivity;
+import com.lanan.filetransport.chat.ChatActivity;
 import com.lanan.filetransport.utils.GetThumbnail;
 import com.lanan.filetransport.utils.Jni;
 import com.lanan.filetransport.utils.Parameters;
@@ -196,7 +195,7 @@ public class FileManager extends AppCompatActivity {
             listView.setAdapter(adapter);
         }
 
-        Parameters.setStatusBarColor(this, MainActivity.isAbove);
+        Parameters.setStatusBarColor(this);
     }
 
     private void uploadFile(final File uploadFile) {

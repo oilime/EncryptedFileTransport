@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lanan.encrypted_file_transport"
+    package="com.lanan.filetransport"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -29,11 +29,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.lanan.filetransport.file_transport.ChatActivity"
+            android:name="com.lanan.filetransport.chat.ChatActivity"
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name="com.lanan.filetransport.file_manage.FileManager"
+            android:name="com.lanan.filetransport.manage.FileManager"
             android:launchMode="singleInstance" >
         </activity>
 
@@ -42,14 +42,6 @@
                 <action android:name="NotificationService" />
             </intent-filter>
         </service>
-
-        <receiver android:name="com.lanan.filetransport.services.MyBroadcastReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-
-                <category android:name="android.intent.category.HOME" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

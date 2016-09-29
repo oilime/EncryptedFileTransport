@@ -1,4 +1,4 @@
-package com.lanan.filetransport.file_transport;
+package com.lanan.filetransport.chat;
 
 class ChatMsgEntity {
 	private String name;

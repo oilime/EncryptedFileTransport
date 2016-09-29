@@ -16,7 +16,6 @@ public class Encryption {
 	private static final String algorithmStr = "AES/CBC/PKCS5Padding";
     static private Cipher cipher;
     private static byte[] paramIv = new byte[16];
-    private static int fileLength = 0;
     private static final String keyBytes = "123456abcdefghij";
 
     static private Cipher deCipher = cipherSet(Cipher.DECRYPT_MODE);
@@ -54,7 +53,6 @@ public class Encryption {
 
             while ((decryptLen = inputStream.read(decryptBuffer)) != -1) {
                 cipherOutputStream.write(decryptBuffer, 0, decryptLen);
-                fileLength += decryptLen;
             }
             cipherOutputStream.close();
             outputStream.close();

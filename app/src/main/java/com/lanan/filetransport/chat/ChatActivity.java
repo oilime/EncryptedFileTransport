@@ -1,4 +1,4 @@
-package com.lanan.filetransport.file_transport;
+package com.lanan.filetransport.chat;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lanan.filetransport.R;
-import com.lanan.filetransport.file_manage.FileManager;
+import com.lanan.filetransport.manage.FileManager;
 import com.lanan.filetransport.main.MainActivity;
 import com.lanan.filetransport.utils.Encryption;
 import com.lanan.filetransport.utils.Parameters;
@@ -333,14 +333,14 @@ public class ChatActivity extends AppCompatActivity{
 		});
 
 		tarName = (TextView) findViewById(R.id.tarName);
-        if (objname.equals(""))
+        if (!objname.equals(""))
 		    tarName.setText(objname);
 
 		pDialog = new ProgressDialog(ChatActivity.this);
 		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		pDialog.setCanceledOnTouchOutside(false);
 
-		Parameters.setStatusBarColor(this, MainActivity.isAbove);
+		Parameters.setStatusBarColor(this);
 	}
 
 	public void initData() {

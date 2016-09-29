@@ -19,7 +19,7 @@ import android.view.Window;
 import android.widget.ExpandableListView;
 
 import com.lanan.filetransport.R;
-import com.lanan.filetransport.file_transport.ChatActivity;
+import com.lanan.filetransport.chat.ChatActivity;
 import com.lanan.filetransport.services.NotificationService;
 import com.lanan.filetransport.utils.Mutex;
 import com.lanan.filetransport.utils.Parameters;
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Parameters.setStatusBarColor(this, isAbove);
+        Parameters.setStatusBarColor(this);
     }
 
     private void getTarData(){

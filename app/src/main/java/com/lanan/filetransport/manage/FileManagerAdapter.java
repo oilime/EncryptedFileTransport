@@ -1,4 +1,4 @@
-package com.lanan.filetransport.file_manage;
+package com.lanan.filetransport.manage;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -56,13 +56,13 @@ class FileManagerAdapter extends BaseAdapter {
 
         if(convertView == null) {
             if (!image) {
-                convertView = mInflater.inflate(R.layout.adapter_regular, null);
+                convertView = mInflater.inflate(R.layout.adapter_regular, parent, false);
                 holder = new ViewHolder();
                 holder.text = (TextView) convertView.findViewById(R.id.file_name);
                 holder.thumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
                 holder.check = (ImageView) convertView.findViewById(R.id.rcheck);
             } else {
-                convertView = mInflater.inflate(R.layout.adapter_img, null);
+                convertView = mInflater.inflate(R.layout.adapter_img, parent, false);
                 holder = new ViewHolder();
                 holder.thumbnail = (ImageView) convertView.findViewById(R.id.thumbn);
                 holder.check = (ImageView) convertView.findViewById(R.id.scheck);

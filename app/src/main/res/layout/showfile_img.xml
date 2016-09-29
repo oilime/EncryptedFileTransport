@@ -26,19 +26,19 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/img_backbutton"
-            android:layout_gravity="left|center_vertical"
+            android:layout_gravity="start|center_vertical"
             android:src="@drawable/myreturn"
-            android:layout_marginLeft="16dp" />
+            android:layout_marginStart="16dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text="发送"
             android:id="@+id/img_sendbutton"
-            android:layout_gravity="right|center_vertical"
+            android:layout_gravity="end|center_vertical"
             android:background="@drawable/mybutton"
             android:textSize="18sp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
             android:textColor="#000000"
             android:gravity="center" />
     </FrameLayout>
@@ -66,7 +66,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -112,7 +113,5 @@
                     android:layout_gravity="center_horizontal" />
             </LinearLayout>
         </LinearLayout>
-
     </FrameLayout>
-
 </LinearLayout>

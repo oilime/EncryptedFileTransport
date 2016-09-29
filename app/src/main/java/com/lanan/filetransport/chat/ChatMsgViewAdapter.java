@@ -1,4 +1,4 @@
-package com.lanan.filetransport.file_transport;
+package com.lanan.filetransport.chat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -62,9 +62,9 @@ class ChatMsgViewAdapter extends BaseAdapter {
 		ViewHolder viewHolder;
 		if (convertView == null) {
 			if (isComMsg) {
-				convertView = mInflater.inflate(R.layout.msg_left, null);
+				convertView = mInflater.inflate(R.layout.msg_left, parent, false);
 			} else {
-				convertView = mInflater.inflate(R.layout.msg_right, null);
+				convertView = mInflater.inflate(R.layout.msg_right, parent, false);
 			}
 
 			viewHolder = new ViewHolder();

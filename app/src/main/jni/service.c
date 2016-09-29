@@ -18,7 +18,7 @@ enum ERROR_SET {
     CREATE_DIR_FAILED, SUCCESS
 };
 
-volatile int stop = 1;
+volatile int stop;
 
 void ShowCerts(SSL * ssl) {
     X509 *cert = SSL_get_peer_certificate(ssl);
@@ -70,14 +70,12 @@ void recv_file(JNIEnv *env, jobject obj, const char *filename, const char *filep
 JNIEXPORT void JNICALL Java_com_lanan_filetransport_utils_Jni_set_1stop
         (JNIEnv *env, jobject obj) {
     stop = 0;
-    LOGD("Server: 停止标记 %d", stop);
 }
 
 JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_server_1set_1socket
         (JNIEnv *env, jobject obj, jint j_port, jstring j_cert, jstring j_ca) {
     int listen_socket;
     int mid_socket;
-    int timeout = 2000;
     int len;
     int flag;
     struct sockaddr_in local_addr;
@@ -87,6 +85,7 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_server_1set_1socke
     char *content, *ip = NULL, *filename = NULL, *filelength = NULL;
     char filepath[1024];
     const char sep = '=';
+    struct timeval timeout = {5, 0};
     SSL_CTX *ctx;
 
     char cert[1024] = {0}, ca[1024] = {0};
@@ -112,32 +111,28 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_server_1set_1socke
         ERR_print_errors_fp(stdout);
         return LOAD_CA_FAILED;
     }
-    LOGD("Server: ca证书加载成功");
 
     if (SSL_CTX_use_certificate_file(ctx, cert, SSL_FILETYPE_PEM) <= 0) {
         ERR_print_errors_fp(stdout);
         return LOAD_SERVER_FAILED;
     }
-    LOGD("Server: 服务器证书加载成功");
 
     if (SSL_CTX_use_PrivateKey_file(ctx, server_key, SSL_FILETYPE_PEM) <= 0) {
         ERR_print_errors_fp(stdout);
         return LOAD_SERVER_KEY_FAILED;
     }
-    LOGD("Server: 服务器私钥加载成功");
 
     if (!SSL_CTX_check_private_key(ctx)) {
         ERR_print_errors_fp(stdout);
         return VERIFY_SERVER_FAILED;
     }
-    LOGD("Server: 服务器证书认证成功");
 
     if ((listen_socket = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-        LOGE("创建socket失败, 错误原因: %s", strerror(errno));
         return CREATE_SOCKET_FAILED;
     }
-    setsockopt(listen_socket, SOL_SOCKET, SO_SNDTIMEO, (char *) &timeout, sizeof(int));
-    setsockopt(listen_socket, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(int));
+    setsockopt(listen_socket, SOL_SOCKET, SO_SNDTIMEO, (char *) &timeout, sizeof(struct timeval));
+    setsockopt(listen_socket, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(struct timeval));
+
 
     memset(&local_addr, 0, sizeof(local_addr));
     local_addr.sin_family = AF_INET;
@@ -145,27 +140,21 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_server_1set_1socke
     local_addr.sin_addr.s_addr = INADDR_ANY;
 
     if (bind(listen_socket, (struct sockaddr *) &local_addr, sizeof(struct sockaddr)) == -1) {
-        LOGE("socket绑定失败");
         return SOCKET_BIND_FAILED;
-    } else
-        LOGD("Server: 绑定成功");
+    }
 
     if (listen(listen_socket, 10) == -1) {
         LOGE("监听失败");
         return SOCKET_LISTEN_FAILED;
-    } else
-        LOGD("Server: 开始监听");
+    }
 
+    stop = 1;
     while (stop) {
         SSL *ssl;
         len = sizeof(struct sockaddr);
         if ((mid_socket = accept(listen_socket, (struct sockaddr *) &client_addr, &len)) == -1) {
-            perror("accept");
-            exit(errno);
-        } else
-            LOGD("Server: 连接来源: %s, 端口号: %d, socket号: %d\n",
-                   inet_ntoa(client_addr.sin_addr),
-                   ntohs(client_addr.sin_port), mid_socket);
+            continue;
+        }
 
         ssl = SSL_new(ctx);
 
@@ -208,26 +197,20 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_server_1set_1socke
 
         if (access(root_dir, F_OK) == -1) {
             if (mkdir(root_dir, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1) {
-                LOGD("Server: 创建文件夹失败, 错误原因为：%s", strerror(errno));
                 return CREATE_DIR_FAILED;
             }
-            LOGD("文件夹创建成功");
         }
 
         memset(filepath, 0, sizeof(filepath));
         strncpy(filepath, root_dir, strlen(root_dir));
         strncat(filepath, filename, strlen(filename));
-        LOGD("Server: 文件路径 %s", filepath);
 
         char test[128] = "ok\0";
         len = SSL_write(ssl, test, strlen(test));
         if (len <= 0) {
             LOGE("消息'%s'发送失败, 错误原因为：%s\n", server_buf, strerror(errno));
             goto finish;
-        } else {
-            LOGD("Server: 发送消息: %s", test);
         }
-        LOGD("Server: 开始接收");
 
         memset(server_buf, 0, MAXBUF);
         int fd = open(filepath, O_RDWR | O_CREAT | O_EXCL | O_TRUNC);
@@ -243,7 +226,6 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_server_1set_1socke
                     break;
                 memset(server_buf, 0, MAXBUF);
             }
-            LOGD("Server: 接收完成");
             recv_file(env, obj, filename, filepath, ip);
         }
         close(fd);

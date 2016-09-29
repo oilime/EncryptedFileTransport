@@ -1,7 +1,6 @@
 #include "com_lanan_filetransport_utils_Jni.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <netinet/in.h>
 #include <unistd.h>
 #include <netdb.h>
@@ -15,7 +14,7 @@
 
 enum ERROR_SET {
     SUCCESS, SET_MODE_FAILED, LOAD_CA_FAILED, CONNECTION_FAILED, FILE_NOT_EXISTS,
-    GET_RESPONSE_FAILED, FAILED
+    GET_RESPONSE_FAILED, OPEN_FILE_FAILED, FAILED
 };
 
 SSL *top_ssl;
@@ -27,7 +26,6 @@ int open_connection(const char *hostname, int port) {
     struct hostent *host;
     struct sockaddr_in addr;
     if ((host = gethostbyname(hostname)) == NULL) {
-        LOGD("Client: 获取ip错误, 原因为%s)", strerror(errno));
         return -1;
     }
     sd = socket(PF_INET, SOCK_STREAM, 0);
@@ -93,7 +91,6 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_client_1send_1file
         ERR_print_errors_fp(stdout);
         return LOAD_CA_FAILED;
     }
-    LOGD("Client: 客户端ca证书加载成功");
 
     client_fd = open_connection(serverip, port);
     top_ssl = SSL_new(ctx);
@@ -101,7 +98,6 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_client_1send_1file
 
     SSL_set_fd(top_ssl, client_fd);
     if (SSL_connect(top_ssl) == -1) {
-        LOGE("连接错误, 原因为%s", strerror(errno));
         return CONNECTION_FAILED;
     } else {
         LOGE("使用%s算法套件\n", SSL_get_cipher(top_ssl));
@@ -109,23 +105,18 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_client_1send_1file
 
     int file_len = (*env)->GetStringLength(env, j_filepath);
     (*env)->GetStringUTFRegion(env, j_filepath, 0, file_len, filepath);
-    LOGD("Client: 文件路径: %s", filepath);
 
     int hostip_len = (*env)->GetStringLength(env, j_ip);
     (*env)->GetStringUTFRegion(env, j_ip, 0, hostip_len, ip);
-    LOGD("Client: ip地址: %s", ip);
 
     if (access(filepath, F_OK) == -1) {
-        LOGD("Client: 所选文件: %s 不存在！", filepath);
         return FILE_NOT_EXISTS;
     }
 
     tmp = strrchr(filepath, sep) + 1;
     filename = (char *) malloc(strlen(tmp));
     strncpy(filename, tmp, strlen(filename));
-    LOGD("Client: 文件名: %s", filename);
     sprintf(filelength, "%d", get_file_size(filepath));
-    LOGD("Client: 文件长度: %s", filelength);
 
     strncat(content, head, strlen(head));
     strncat(content, ip, strlen(ip));
@@ -134,32 +125,25 @@ JNIEXPORT jint JNICALL Java_com_lanan_filetransport_utils_Jni_client_1send_1file
     strncat(content, end, strlen(end));
     strncat(content, filelength, strlen(filelength));
     free(filename);
-    LOGD("Client: 内容: %s", content);
 
     len = SSL_write(top_ssl, content, strlen(content));
-    LOGD("Client: write %d", len);
     if (len > 0) {
-        LOGD("Client: 开始接收反馈");
         free(content);
         len = SSL_read(top_ssl, buf, MAXBUF);
         LOGD("Client: read %d", len);
         if (len <= 0) {
-            LOGD("Client: 接收反馈信息失败");
             finish();
             return GET_RESPONSE_FAILED;
         }
 
         int fd = open(filepath, O_RDWR);
-        int j = 0;
         if (fd != -1) {
             while ((len = read(fd, buf, sizeof(buf))) > 0) {
                 SSL_write(top_ssl, buf, len);
                 memset(buf, 0, sizeof(buf));
-                LOGD("Client: file write %d", j++);
             }
-            LOGD("Client: finish");
         } else {
-            LOGD("Client: 打开文件失败 %s", strerror(errno));
+            return OPEN_FILE_FAILED;
         }
         close(fd);
         finish();

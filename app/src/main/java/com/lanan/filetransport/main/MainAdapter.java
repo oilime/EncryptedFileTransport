@@ -63,7 +63,7 @@ class MainAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
-        convertView = mInflater.inflate(R.layout.adapter, null);
+        convertView = mInflater.inflate(R.layout.adapter, parent, false);
 
         TextView groupName = (TextView) convertView.findViewById(R.id.tarname);
         ImageView groupIcon = (ImageView) convertView.findViewById(R.id.groupicon);
@@ -81,7 +81,7 @@ class MainAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        convertView = mInflater.inflate(R.layout.childadapter, null);
+        convertView = mInflater.inflate(R.layout.childadapter, parent, false);
         TextView childName = (TextView) convertView.findViewById(R.id.childtext);
         String name = (String) mlist.get(groupPosition).get(childPosition).get("name");
         childName.setText(name);

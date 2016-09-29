@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
@@ -49,13 +50,17 @@ public class NotificationService extends Service {
         Notification.Builder builder = new Notification.Builder(getBaseContext())
 				.setSmallIcon(R.drawable.sendbutton)
 				.setTicker("您收到新的文件")
-				.setContent(customView)
 				.setDefaults(Notification.DEFAULT_SOUND)
 				.setDefaults(Notification.DEFAULT_VIBRATE)
 				.setContentIntent(messagePendingIntent)
 				.setSound(RingtoneManager.getActualDefaultRingtoneUri(getBaseContext(),
 						RingtoneManager.TYPE_NOTIFICATION))
 				.setAutoCancel(true);
+        if (Build.VERSION.SDK_INT >= 24) {
+            builder.setCustomContentView(customView);
+        } else {
+            builder.setContent(customView);
+        }
 
 		messageNotification = builder.build();
 		messageNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -172,11 +177,10 @@ public class NotificationService extends Service {
 
     @Override
     public void onDestroy() {
-        if (server != null && handle != null && handle.isAlive()) {
+        if (server != null && handle != null) {
             handle.setStop(true);
             server.set_stop();
             handle = null;
-            Log.d("Emilio", "服务器关闭");
         }
     }
 }
